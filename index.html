@@ -1,10 +1,12 @@
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>For Her — Under the Stars</title>
+  <title>My Luni</title>
   <style>
+    
     * { margin: 0; padding: 0; box-sizing: border-box; }
     body {
       font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
@@ -85,6 +87,17 @@
       height: auto;
       border-radius: 4px;
     }
+    .polaroid-title {
+      text-align: center;
+      font-size: 2rem;
+      margin-top: 3rem;
+      color: #ff77e9;
+      text-shadow: 0 0 10px rgba(255, 119, 233, 0.5);
+      font-weight: bold;
+      animation: fadeInText 2s ease forwards;
+      opacity: 0;
+    }
+
     .caption {
       margin-top: 0.5rem;
       font-size: 0.9rem;
@@ -192,6 +205,22 @@
       background-color: #d65f9d;
     }
 
+    .constellation-section {
+      padding: 4rem 2rem;
+      text-align: center;
+      background: #0b0c10;
+    }
+
+    #constellation-canvas {
+      width: 100%;
+      max-width: 800px;
+      height: 400px;
+      display: block;
+      margin: 2rem auto;
+      background: transparent;
+    }
+
+
     section.timeline, section.story, section.contact {
       padding: 4rem 2rem;
       max-width: 1000px;
@@ -294,7 +323,7 @@
       color: #ff77e9;
       font-weight: bold;
       z-index: 999;
-      font-size: 0.9rem;
+      font-size: 1.5rem;
       backdrop-filter: blur(8px);
     }
 
@@ -343,6 +372,282 @@
       transform: rotate(-45deg) translateY(-50%);
     }
 
+    .strawberry-bite-section {
+      padding: 4rem 2rem;
+      text-align: center;
+      background: #101318;
+    }
+
+    #strawberry-container {
+      margin-top: 2rem;
+    }
+
+    #strawberry-img {
+      width: 150px;
+      height: auto;
+      transition: transform 0.4s ease, opacity 0.4s ease;
+      cursor: pointer;
+    }
+
+    #strawberry-img.shrink {
+      transform: scale(0.9) rotate(-5deg);
+    }
+
+    #bite-message {
+      margin-top: 1rem;
+      font-size: 1.2rem;
+      color: #ff77e9;
+      opacity: 0;
+      transition: opacity 1s ease;
+    }
+
+    #bite-message.show {
+      opacity: 1;
+    }
+
+    .hidden {
+      display: none;
+    }
+
+    .strawberry-buttons {
+      margin-top: 1.5rem;
+      display: flex;
+      justify-content: center;
+      gap: 1rem;
+    }
+
+    .strawberry-buttons button {
+      background-color: #ff77e9;
+      color: white;
+      border: none;
+      padding: 0.6rem 1.2rem;
+      border-radius: 20px;
+      cursor: pointer;
+      font-size: 1.3rem;
+      transition: background-color 0.3s ease;
+    }
+
+    .strawberry-buttons button:hover {
+      background-color: #d658bb;
+    }
+
+    .telescope-section {
+      background: radial-gradient(#000 50%, #0b0c10 100%);
+      padding: 4rem 2rem;
+      text-align: center;
+      color: #fff;
+      position: relative;
+      overflow: hidden;
+    }
+
+    #telescope-container {
+      position: relative;
+      margin: 2rem auto;
+      width: 500px;
+      height: 500px;
+      border-radius: 50%;
+      box-shadow: 0 0 40px rgba(255, 255, 255, 0.1);
+      overflow: hidden;
+      background: #000;
+    }
+
+    #telescope-canvas {
+      width: 100%;
+      height: 100%;
+      display: block;
+      border-radius: 50%;
+      cursor: crosshair;
+    }
+
+    #moon-photo-popup {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      width: 300px;
+      transform: translate(-50%, -50%) scale(0.8);
+      background: #fff;
+      border-radius: 10px;
+      box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+      padding: 1rem;
+      text-align: center;
+      z-index: 10;
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity 0.5s ease, transform 0.5s ease;
+    }
+    #moon-photo-popup.show {
+      opacity: 1;
+      pointer-events: all;
+      transform: translate(-50%, -50%) scale(1);
+    }
+    #moon-photo-popup img {
+      width: 100%;
+      border-radius: 8px;
+    }
+    #caption-text {
+      font-size: 1rem;
+      color: #333;
+      margin-top: 0.5rem;
+      font-weight: bold;
+    }
+    #photo-count {
+      margin-top: 1rem;
+      color: #aaa;
+      font-size: 0.85rem;
+    }
+
+    #capture-button {
+      position: absolute;
+      bottom: 40px;
+      right: 40px;
+      padding: 10px 18px;
+      font-size: 1rem;
+      background-color: #ff77e9;
+      color: white;
+      border: none;
+      border-radius: 12px;
+      cursor: pointer;
+      box-shadow: 0 0 15px rgba(255, 119, 233, 0.4);
+      z-index: 10;
+      transition: background-color 0.3s ease, transform 0.2s ease;
+    }
+
+    #capture-button:hover {
+      background-color: #d65f9d;
+      transform: scale(1.05);
+    }
+
+    .snapshot-frame {
+      position: fixed;
+      top: 50%;
+      left: 50%;
+      width: 240px;
+      background: #fff;
+      border-radius: 8px;
+      transform: translate(-50%, -50%) scale(0.7);
+      box-shadow: 0 15px 30px rgba(0,0,0,0.5);
+      opacity: 0;
+      transition: transform 0.4s ease, opacity 0.4s ease;
+      z-index: 999;
+      text-align: center;
+      padding: 0.5rem;
+    }
+
+    .snapshot-frame.visible {
+      transform: translate(-50%, -50%) scale(1);
+      opacity: 1;
+    }
+
+    .captured-image {
+      width: 100%;
+      border-radius: 4px;
+    }
+
+    .snapshot-caption {
+      margin-top: 0.5rem;
+      font-weight: bold;
+      color: #333;
+    }
+
+    .telescope-wrapper {
+    display: flex;
+      flex-direction: column;
+      align-items: center;
+      max-width: 800px;
+      margin: 0 auto;
+      position: relative;
+    }
+
+    .telescope-controls {
+      display: flex;
+      gap: 1rem;
+      justify-content: center;
+      margin-top: 1.5rem;
+      width: 100%;
+    }
+
+    #capture-button {
+      order: 1; /* Make it appear first */
+    }
+
+    #reset-telescope {
+      order: 2;
+    }
+
+    .snapshot-frame {
+      position: fixed;
+      top: 50%;
+      left: 50%;
+      width: 450px;
+      background: #fff;
+      border-radius: 12px;
+      transform: translate(-50%, -50%) scale(0.8);
+      box-shadow: 0 20px 50px rgba(0,0,0,0.6);
+      opacity: 0;
+      transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+      z-index: 1000;
+      text-align: center;
+      padding: 1.5rem;
+    }
+
+    .snapshot-frame.visible {
+      transform: translate(-50%, -50%) scale(1);
+      opacity: 1;
+    } 
+
+    .captured-image {
+      width: 100%;
+      border-radius: 8px;
+      border: 1px solid #eee;
+    }
+
+    .snapshot-caption {
+      margin-top: 1rem;
+      font-weight: bold;
+      color: #333;
+      font-size: 1.2rem;
+    }
+
+    .close-polaroid {
+      position: absolute;
+      top: 5px;
+      right: 5px;
+      background: transparent;
+      border: none;
+      font-size: 1.5rem;
+      cursor: pointer;
+      color: #ff77e9;
+      width: 30px;
+      height: 30px;
+      border-radius: 50%;
+      transition: all 0.3s ease;
+    }
+
+    .close-polaroid:hover {
+      background: rgba(255, 119, 233, 0.1);
+      transform: scale(1.1);
+    }
+
+    /* Add this for mobile responsiveness */
+    @media (max-width: 768px) {
+      .telescope-wrapper {
+        flex-direction: column;
+      }
+      
+      .telescope-controls {
+        flex-direction: column;
+        align-items: center;
+      }
+      
+      .snapshot-frame {
+        width: 90%;
+        max-width: 350px;
+      }
+    }
+
+
+
+
     @media screen and (max-width: 768px) {
       header h1 {
         font-size: 1.8rem;
@@ -378,7 +683,7 @@
 
   <audio id="pop-sound" src="0416.MP3" preload="auto"></audio>
 
-  <div id="love-counter">Love Counter: 0</div>
+  <div id="love-counter">Love Amount: 0</div>
 
   <header id="video-section">
     <video autoplay muted loop>
@@ -431,7 +736,7 @@
 
   <section class="connect-stars-section fade-in">
   <h2>Draw Your Name in Stars ✨</h2>
-  <p>Click to place stars, then click stars to connect them and create your name "Lunar", or anything you wish to draw Luni</p>
+  <p>Click to place stars, then click a star you placed, and click another to connect them and create your name "Lunar", or anything you wish to draw Luni</p>
   <button id="resetButton" class="btn">Reset Canvas</button>
   <button id="saveButton" class="btn">Save Constellation</button>
   <div class="star-canvas-container">
@@ -439,34 +744,74 @@
   </div>
   </section>
 
+  <section class="constellation-section fade-in">
+    <h2>Lunar, Drawn with stars...</h2>
+    <canvas id="constellation-canvas" width="800" height="300"></canvas>
+  </section>
+  
+
   <div class="lightbox" id="lightbox">
     <img src="" alt="Full Image" id="lightbox-img" />
   </div>
 
+  <section class="strawberry-bite-section fade-in">
+    <h2>Shtrawberry break for my Luni 🍓🍓🍓</h2>
+    <p>Each bite, makes her smile bigger 🍓 </p>
+    <div id="strawberry-container">
+      <img id="strawberry-img" src="strawberry1.png" alt="Strawberry" />
+      <p id="bite-message" class="hidden">You didn't leave a shtrawberry for me Luni 😭🍓</p>
+    </div>
+    <div class="strawberry-buttons">
+      <button id="more-btn">More shtrawberries please 🍓</button>
+      <button id="full-btn">I'm full 💤</button>
+    </div>
+  </section>
+
+  <section class="telescope-section fade-in">
+    <h2>Here, you get to look at the Moon 🌕, through my telescope</h2>
+    <p>Click, hold, and drag, to move around. scroll with the mouse to zoom in, and click the button to capture yourself.</p>
+    <audio id="shutter-sound" src="shutter.mp3" preload="auto"></audio>
+    <div class="telescope-wrapper">
+      <div id="telescope-container">
+        <canvas id="telescope-canvas" width="500" height="500"></canvas>
+        <div id="photo-count">Photos taken: 0</div>
+        <div id="moon-photo-popup" class="hidden">
+          <img id="captured-photo" src="" alt="Moon Shot" />
+          <div id="caption-text">Your moonlight memory 🌙</div>
+        </div>
+      </div>
+      
+      <div class="telescope-controls">
+        <button id="capture-button" class="btn">📸 Capture Photo</button>
+        <button id="reset-telescope" class="btn">🔭 Reset View</button>
+      </div>
+    </div>
+  </section>
+  
+  
   <section class="timeline fade-in">
     <h2>Our Journey</h2>
     <div class="timeline-event">
-      <h3>✨ We Met — Jan 2022</h3>
-      <p>The stars aligned and we found each other.</p>
+      <h3>We Met — Feb 02 2025</h3>
+      <p>The stars, the planets, and the whole universe aligned, so we could find each other...</p>
     </div>
     <div class="timeline-event">
-      <h3>🌌 First Starry Shoot — Apr 2022</h3>
-      <p>I saw you shining brighter than the night sky.</p>
+      <h3>Luni's Birthday 🎂 - June 10 2025</h3>
+      <p>The most special day of the year 🤭, early Happy birthday to you my sweet Luni 🍓</p>
     </div>
     <div class="timeline-event">
-      <h3>💫 Our First Trip — Oct 2022</h3>
-      <p>Captured memories beneath a thousand stars.</p>
+      <h3>The first step towards forever - Oct 10 2026</h3>
+      <p>I can't wait... just can't wait to tell my parents about my princess...</p>
+    </div>
+    <div class="timeline-event">
+      <h3>Luni is a Doctor - Oct 10 2031</h3>
+      <p>I imagine myself, cheering for her, being her biggest fan, while she wears that white dress she always dreamt of...</p>
     </div>
   </section>
 
   <section class="story fade-in">
     <h2>Our Story</h2>
-    <p>This isn't just about stars...</p>
-  </section>
-
-  <section class="contact fade-in">
-    <h2>With Love</h2>
-    <p>Happy Birthday, my love 💙</p>
+    <p>This section is still under construction, hang tight Lunari 🤭</p>
   </section>
 
   <nav class="floating-nav">
@@ -475,6 +820,7 @@
   </nav>
 
   <script>
+    
     const faders = document.querySelectorAll('.fade-in');
     const observer = new IntersectionObserver(entries => {
       entries.forEach(entry => {
@@ -520,13 +866,13 @@
     let emojiInterval;
 
     function createFloatingEmoji() {
-      if (!emojisEnabled || activeEmojis.length >= 20) return;
+      if (!emojisEnabled || activeEmojis.length >= 15) return;
 
       const emoji = document.createElement('div');
       emoji.className = 'floating-emoji';
       emoji.textContent = emojis[Math.floor(Math.random() * emojis.length)];
       emoji.style.left = `${Math.random() * 90}%`;
-      emoji.style.top = `${Math.random() * 80}%`;
+      emoji.style.top = `${Math.random() * 90}%`;
       emoji.style.animationDuration = `${3 + Math.random() * 3}s`;
 
       emoji.addEventListener('click', (e) => {
@@ -542,7 +888,7 @@
         emoji.remove();
         activeEmojis = activeEmojis.filter(el => el !== emoji);
         loveCount++;
-        loveCounterDisplay.textContent = `Love Counter: ${loveCount}`;
+        loveCounterDisplay.textContent = `Love Amount: ${loveCount}`;
       });
 
       document.body.appendChild(emoji);
@@ -566,7 +912,7 @@
     document.getElementById('emoji-toggle').addEventListener('click', toggleEmojis);
 
     function createShootingStar() {
-      if (Math.random() > 0.5) return; // 30% chance to create a shooting star
+      if (Math.random() > 0.3) return; // 30% chance to create a shooting star
 
       const star = document.createElement('div');
       star.className = 'shooting-star';
@@ -632,7 +978,7 @@
     // Create shooting stars periodically
     setInterval(createShootingStar, 4000);
     // Also create one shortly after page load
-    setTimeout(createShootingStar, 1500);
+    setTimeout(createShootingStar, 2000);
 
     document.getElementById('scroll-top').addEventListener('click', function (e) {
       e.preventDefault();
@@ -707,6 +1053,283 @@
       link.click();
     });
 
+    const canvas2 = document.getElementById('constellation-canvas');
+    const ctx2 = canvas2.getContext('2d');
+    const width = canvas2.width;
+    const height = canvas2.height;
+
+    // Define star positions (x, y) for the letters in "Lunar"
+    const points = [
+      // L
+      [200, 100], [200, 200], [250, 200],
+      // U
+      [280, 100], [280, 200], [330, 200], [330, 100],
+      // N
+      [360, 200], [360, 100], [410, 200], [410, 100],
+      // A
+      [460, 200], [485, 100], [510, 200], [470, 160], [500, 160],
+      // R
+      [540, 200], [540, 100], [590, 100], [590, 150], [540, 150], [590, 200]
+    ];
+
+    let i = 0;
+
+    function drawStar1(x, y) {
+      ctx2.beginPath();
+      ctx2.arc(x, y, 3, 0, Math.PI * 2);
+      ctx2.fillStyle = '#ffffff';
+      ctx2.shadowColor = '#fff';
+      ctx2.shadowBlur = 8;
+      ctx2.fill();
+      ctx2.closePath();
+    }
+
+    function drawLine1(p1, p2) {
+      ctx2.beginPath();
+      ctx2.moveTo(p1[0], p1[1]);
+      ctx2.lineTo(p2[0], p2[1]);
+      ctx2.strokeStyle = '#61dafb';
+      ctx2.lineWidth = 2;
+      ctx2.stroke();
+      ctx2.closePath();
+    }
+
+    function animateConnection1() {
+      if (i < points.length - 1) {
+        drawStar1(...points[i]);
+        drawLine1(points[i], points[i + 1]);
+        i++;
+        setTimeout(animateConnection1, 300);
+      } else if (i === points.length - 1) {
+        drawStar1(...points[i]); // draw last star
+      }
+    }
+
+    // Initialize canvas
+    function startConstellation1() {
+      ctx2.clearRect(0, 0, width, height);
+      i = 0;
+      animateConnection1();
+    }
+    // Trigger the "Lunar" constellation animation when it's visible
+    const constellationSection = document.getElementById("constellation-canvas");
+    const constellationObserver = new IntersectionObserver(entries => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          startConstellation1(); // Call your animation function
+          constellationObserver.unobserve(entry.target); // Run only once
+        }
+      });
+    }, { threshold: 0.5 });
+
+    if (constellationSection) {
+      constellationObserver.observe(constellationSection);
+    }
+
+
+    const strawberryImg = document.getElementById("strawberry-img");
+    const biteMessage = document.getElementById("bite-message");
+    const moreBtn = document.getElementById("more-btn");
+    const fullBtn = document.getElementById("full-btn");
+
+    let biteCount = 0;
+
+    const strawberryImages = [
+      "strawberry1.png", // Full
+      "strawberry2.png", // 1 bite
+      "strawberry3.png", // 2 bites
+      "strawberry4.png", // 3 bites
+      "strawberry5.png", // 4 bites
+    ];
+
+    strawberryImg.addEventListener("click", () => {
+      if (biteCount < strawberryImages.length - 1) {
+        biteCount++;
+        strawberryImg.src = strawberryImages[biteCount];
+      } else if (biteCount === strawberryImages.length - 1) {
+        strawberryImg.src = strawberryImages[biteCount];
+        strawberryImg.style.opacity = "0"; // faded but still visible
+      }
+    });
+
+    moreBtn.addEventListener("click", () => {
+      biteCount = 0;
+      strawberryImg.src = strawberryImages[0];
+      strawberryImg.style.opacity = "1";
+      biteMessage.classList.add("hidden");
+      biteMessage.classList.remove("show");
+    });
+
+    fullBtn.addEventListener("click", () => {
+      biteMessage.classList.remove("hidden");
+      biteMessage.classList.add("show");
+    });
+
+    const canvas3 = document.getElementById("telescope-canvas");
+    const ctx3 = canvas3.getContext("2d");
+
+    const moonImg = new Image();
+    moonImg.src = "moon.jpg";
+
+    let offsetX = 0;
+    let offsetY = 0;
+    let zoom = 1.5;
+    let isDragging = false;
+    let dragStartX, dragStartY;
+    let photosTaken = 0;
+
+    const popup = document.getElementById("moon-photo-popup");
+    const popupImg = document.getElementById("captured-photo");
+    const captionText = document.getElementById("caption-text");
+    const photoCounter = document.getElementById("photo-count");
+    const shutterSound = document.getElementById("shutter-sound");
+    const captureBtn = document.getElementById('capture-button');
+
+    const captions = [
+      "You caught the moon smiling 🌝",
+      "A Lunar Love Shot 💖",
+      "Stargazed and in love ✨",
+      "Your moon memory 🐇",
+      "Captured under your sky 🌌"
+    ];
+
+    canvas3.addEventListener("mousedown", (e) => {
+      isDragging = true;
+      dragStartX = e.offsetX;
+      dragStartY = e.offsetY;
+    });
+    canvas3.addEventListener("mouseup", () => isDragging = false);
+    canvas3.addEventListener("mouseleave", () => isDragging = false);
+    canvas3.addEventListener("mousemove", (e) => {
+      if (isDragging) {
+        offsetX += (e.offsetX - dragStartX) / zoom;
+        offsetY += (e.offsetY - dragStartY) / zoom;
+        dragStartX = e.offsetX;
+        dragStartY = e.offsetY;
+        drawScope();
+      }
+    });
+
+    // Zoom
+    canvas3.addEventListener("wheel", (e) => {
+      e.preventDefault();
+      const zoomAmount = e.deltaY * -0.001;
+      zoom += zoomAmount;
+      zoom = Math.min(Math.max(zoom, 0.5), 3);
+      drawScope();
+    });
+
+    moonImg.onload = () => drawScope();
+
+    function drawScope() {
+      ctx3.clearRect(0, 0, canvas3.width, canvas3.height);
+      const scopeSize = canvas3.width;
+
+      // Draw moon background, pan-able and zoomable
+      const imgWidth = moonImg.width / zoom;
+      const imgHeight = moonImg.height / zoom;
+
+      const drawX = (moonImg.width / 2 - imgWidth / 2 + offsetX);
+      const drawY = (moonImg.height / 2 - imgHeight / 2 + offsetY);
+
+      ctx3.save();
+      ctx3.beginPath();
+      ctx3.arc(scopeSize / 2, scopeSize / 2, scopeSize / 2, 0, Math.PI * 2, true);
+      ctx3.closePath();
+      ctx3.clip();
+
+      ctx3.drawImage(
+        moonImg,
+        drawX, drawY, imgWidth, imgHeight,
+        0, 0, scopeSize, scopeSize
+      );
+      ctx3.restore();
+
+      // Dark vignette
+      const gradient = ctx3.createRadialGradient(scopeSize / 2, scopeSize / 2, 180, scopeSize / 2, scopeSize / 2, scopeSize / 2);
+      gradient.addColorStop(0, 'rgba(0,0,0,0)');
+      gradient.addColorStop(1, 'rgba(0,0,0,0.6)');
+      ctx3.fillStyle = gradient;
+      ctx3.fillRect(0, 0, scopeSize, scopeSize);
+    }
+
+
+    document.getElementById('capture-button').addEventListener('click', function(e) {
+      e.preventDefault();
+      e.stopPropagation();
+      
+      // Play shutter sound
+      const shutterSound = document.getElementById('shutter-sound');
+      shutterSound.currentTime = 0;
+      shutterSound.play();
+      
+      // Create the polaroid frame
+      const snapshot = document.createElement('div');
+      snapshot.className = 'snapshot-frame';
+      
+      // Create the image from canvas
+      const img = document.createElement('img');
+      img.src = canvas3.toDataURL('image/png');
+      img.className = 'captured-image';
+      
+      // Create caption
+      const caption = document.createElement('div');
+      caption.className = 'snapshot-caption';
+      const captions = [
+        "Moon Magic Captured ✨",
+        "For My Moonlight Lover",
+        "Our Celestial Moment",
+        "Luni's Lunar Portrait",
+        "Eternally Yours, Under the Moon"
+      ];
+      caption.textContent = captions[Math.floor(Math.random() * captions.length)];
+      
+      // Create close button
+      const closeBtn = document.createElement('button');
+      closeBtn.innerHTML = '&times;';
+      closeBtn.className = 'close-polaroid';
+      closeBtn.addEventListener('click', () => {
+        snapshot.classList.remove('visible');
+        setTimeout(() => snapshot.remove(), 500);
+      });
+      
+      // Assemble the polaroid
+      snapshot.appendChild(closeBtn);
+      snapshot.appendChild(img);
+      snapshot.appendChild(caption);
+      document.body.appendChild(snapshot);
+      
+      // Animate it in
+      setTimeout(() => {
+        snapshot.classList.add('visible');
+      }, 10);
+      
+      // Update photo counter
+      photosTaken++;
+      document.getElementById('photo-count').textContent = `Photos taken: ${photosTaken}`;
+      
+      // Also show in the popup (optional)
+      const popup = document.getElementById('moon-photo-popup');
+      const popupImg = document.getElementById('captured-photo');
+      const popupCaption = document.getElementById('caption-text');
+      
+      popupImg.src = img.src;
+      popupCaption.textContent = caption.textContent;
+      popup.classList.add('show');
+      
+      setTimeout(() => {
+        popup.classList.remove('show');
+      }, 3000);
+    });
+
+    document.getElementById('reset-telescope').addEventListener('click', function() {
+      offsetX = 0;
+      offsetY = 0;
+      zoom = 1.5;
+      drawScope();
+    });
+    
   </script>
+  
 </body>
 </html>
