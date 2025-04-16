@@ -1,0 +1,712 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>For Her — Under the Stars</title>
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body {
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      color: #fff;
+      background-color: #0b0c10;
+      scroll-behavior: smooth;
+      overflow-x: hidden;
+    }
+    a { color: #61dafb; text-decoration: none; }
+
+    header {
+      position: relative;
+      height: 100vh;
+      overflow: hidden;
+    }
+    header video {
+      position: absolute;
+      top: 0;
+      left: 0;
+      min-width: 100%;
+      min-height: 100%;
+      object-fit: cover;
+      z-index: -1;
+    }
+    header .overlay {
+      position: absolute;
+      top: 0;
+      left: 0;
+      height: 100%;
+      width: 100%;
+      background: rgba(0, 0, 0, 0.4);
+      display: flex;
+      justify-content: flex-start;
+      align-items: flex-start;
+      flex-direction: column;
+      padding: 2rem;
+      text-align: left;
+    }
+    header h1 {
+      font-size: 2.5rem;
+      animation: fadeInText 3s ease forwards;
+      opacity: 0;
+    }
+    header p {
+      font-size: 1rem;
+      margin-top: 0.5rem;
+      animation: fadeInText 4s ease forwards;
+      opacity: 0;
+    }
+    @keyframes fadeInText {
+      from { opacity: 0; transform: translateY(-10px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    section.gallery {
+      padding: 4rem 2rem;
+      display: flex;
+      flex-wrap: wrap;
+      gap: 2rem;
+      justify-content: center;
+    }
+    .polaroid {
+      background: #fff;
+      color: #000;
+      padding: 0.5rem;
+      width: 220px;
+      box-shadow: 0 10px 20px rgba(0,0,0,0.3);
+      text-align: center;
+      border-radius: 8px;
+      transform: rotate(-2deg);
+      transition: transform 0.3s ease;
+    }
+    .polaroid:hover {
+      transform: scale(1.05) rotate(0deg);
+    }
+    .polaroid img {
+      width: 100%;
+      height: auto;
+      border-radius: 4px;
+    }
+    .caption {
+      margin-top: 0.5rem;
+      font-size: 0.9rem;
+      font-weight: bold;
+      color: #333;
+    }
+
+    .lightbox {
+      display: none;
+      position: fixed;
+      top: 0; left: 0;
+      width: 100%; height: 100%;
+      background: rgba(0,0,0,0.8);
+      justify-content: center;
+      align-items: center;
+      z-index: 100;
+      opacity: 0;
+      transition: opacity 0.6s ease;
+      background: radial-gradient(ellipse at center, 
+      rgba(11, 12, 16, 0.98) 0%, 
+      rgba(42, 52, 84, 0.95) 100%);
+      box-shadow: 0 0 0 0 rgba(255, 119, 233, 0.7);
+    }
+
+    .lightbox.active {
+      opacity: 1;
+    }
+    
+    .lightbox.active img {
+      clip-path: circle(100% at 50% 50%);
+      opacity: 1;
+      transform: scale(1);
+      animation: pulseGlow 1.5s ease-out;
+    }
+
+    @keyframes pulseGlow {
+      0% { box-shadow: 0 0 0 0 rgba(234, 206, 228, 0.7); }
+      50% { box-shadow: 0 0 40px 10px rgba(248, 231, 248, 0.3); }
+      100% { box-shadow: 0 0 0 0 rgba(255, 255, 255, 0); }
+    }
+
+    .lightbox img {
+      max-width: 90%;
+      max-height: 80vh;
+      transform-origin: center center;
+      clip-path: circle(10% at 50% 50%);
+      transform: scale(0.9);
+      opacity: 0;
+      transition: all 0.7s cubic-bezier(0.33, 1, 0.68, 1);
+    }
+
+    .lightbox.closing img {
+      clip-path: circle(0% at 50% 50%);
+      opacity: 0;
+      transform: scale(0.8);
+    }
+    
+    .constellation-section {
+      padding: 4rem 2rem;
+      text-align: center;
+      background: #0b0c10;
+    }
+
+    #constellation-canvas {
+      width: 100%;
+      max-width: 800px;
+      height: 400px;
+      display: block;
+      margin: 2rem auto;
+      background: transparent;
+    }
+
+    .connect-stars-section {
+      padding: 4rem 2rem;
+      text-align: center;
+      background: url('your-starry-background.jpg') center/cover no-repeat;
+      color: #fff;
+    }
+
+    .star-canvas-container {
+      display: flex;
+      justify-content: center;
+      margin-top: 2rem;
+    }
+
+    #starCanvas {
+      border: 2px solid #fff;
+      border-radius: 12px;
+      background-color: rgba(0, 0, 0, 0.4);
+      cursor: crosshair;
+    }
+    .btn {
+      padding: 10px 20px;
+      background-color: #ff77e9;
+      border: none;
+      color: #fff;
+      font-size: 16px;
+      cursor: pointer;
+      border-radius: 8px;
+      margin-top: 20px;
+      transition: background-color 0.3s;
+    }
+
+    .btn:hover {
+      background-color: #d65f9d;
+    }
+
+    section.timeline, section.story, section.contact {
+      padding: 4rem 2rem;
+      max-width: 1000px;
+      margin: auto;
+      text-align: center;
+    }
+
+    .timeline-event {
+      margin-bottom: 2rem;
+      border-left: 2px solid #61dafb;
+      padding-left: 1rem;
+      text-align: left;
+    }
+
+    .fade-in {
+      opacity: 0;
+      transform: translateY(20px);
+      transition: opacity 1s ease-out, transform 1s ease-out;
+    }
+    .fade-in.visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    .floating-nav {
+      position: fixed;
+      bottom: 20px;
+      right: 20px;
+      z-index: 999;
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
+    .floating-nav a {
+      font-size: 0.9rem;
+      background: rgba(255,255,255,0.1);
+      padding: 0.6rem 1rem;
+      border-radius: 20px;
+      backdrop-filter: blur(8px);
+      color: #61dafb;
+      border: 1px solid #61dafb;
+      transition: background 0.3s;
+    }
+    .floating-nav a:hover {
+      background: rgba(97, 218, 251, 0.2);
+    }
+
+    .floating-emoji {
+      position: fixed;
+      font-size: 1.8rem;
+      cursor: pointer;
+      z-index: 99;
+      animation: float infinite linear;
+    }
+
+    @keyframes float {
+      0% { transform: translateY(0) rotate(0deg); }
+      50% { transform: translateY(-20px) rotate(10deg); }
+      100% { transform: translateY(0) rotate(-10deg); }
+    }
+
+    @keyframes pulseGlitter {
+      0% {
+        opacity: 1;
+        transform: scale(1);
+        filter: drop-shadow(0 0 5px #ff77e9) brightness(1.3);
+      }
+      50% {
+        transform: scale(1.4);
+        filter: drop-shadow(0 0 10px #fff) brightness(2);
+      }
+      100% {
+        opacity: 0;
+        transform: scale(1.6) translateY(-30px);
+        filter: drop-shadow(0 0 5px #ff77e9) brightness(0.8);
+      }
+    }
+
+    .pop-text {
+      position: absolute;
+      color: #ff77e9;
+      font-weight: bold;
+      font-size: 1.4rem;
+      pointer-events: none;
+      animation: pulseGlitter 1.2s ease forwards;
+      text-shadow: 0 0 4px #ff77e9, 0 0 8px #fff;
+      -webkit-text-stroke: 0.5px #000;
+      white-space: nowrap;
+      z-index: 1000;
+    }
+
+    #love-counter {
+      position: fixed;
+      bottom: 20px;
+      left: 20px;
+      background: rgba(255, 119, 233, 0.1);
+      padding: 0.6rem 1rem;
+      border-radius: 20px;
+      border: 1px solid #ff77e9;
+      color: #ff77e9;
+      font-weight: bold;
+      z-index: 999;
+      font-size: 0.9rem;
+      backdrop-filter: blur(8px);
+    }
+
+    /* New styles for emoji toggle button */
+    #emoji-toggle {
+      position: fixed;
+      bottom: 80px;
+      right: 20px;
+      z-index: 999;
+      font-size: 0.9rem;
+      background: rgba(255,255,255,0.1);
+      padding: 0.6rem 1rem;
+      border-radius: 20px;
+      backdrop-filter: blur(8px);
+      color: #61dafb;
+      border: 1px solid #61dafb;
+      transition: background 0.3s;
+      cursor: pointer;
+    }
+    #emoji-toggle:hover {
+      background: rgba(97, 218, 251, 0.2);
+    }
+
+    /* Shooting star styles */
+    .shooting-star {
+      position: fixed;
+      width: 4px;
+      height: 4px;
+      border-radius: 50%;
+      background: white;
+      box-shadow: 0 0 10px 2px rgba(255, 255, 255, 0.8);
+      z-index: 98;
+      pointer-events: none;
+      opacity: 0;
+    }
+    
+    .shooting-star::before {
+      content: '';
+      position: absolute;
+      top: 50%;
+      left: 0;
+      width: 100px;
+      height: 1px;
+      background: linear-gradient(90deg, rgba(255,255,255,1) 0%, rgba(255,255,255,0) 100%);
+      transform-origin: left center;
+      transform: rotate(-45deg) translateY(-50%);
+    }
+
+    @media screen and (max-width: 768px) {
+      header h1 {
+        font-size: 1.8rem;
+      }
+      header p {
+        font-size: 0.9rem;
+      }
+      .gallery {
+        flex-direction: column;
+        align-items: center;
+        padding: 2rem 1rem;
+      }
+      .floating-nav a, #love-counter, #emoji-toggle {
+        font-size: 0.75rem;
+        padding: 0.5rem 0.8rem;
+      }
+      #love-counter {
+        bottom: 80px;
+      }
+      #emoji-toggle {
+        bottom: 120px;
+      }
+      .floating-emoji {
+        font-size: 1.5rem;
+      }
+      section.timeline, section.story, section.contact {
+        padding: 2rem 1rem;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <audio id="pop-sound" src="0416.mp3" preload="auto"></audio>
+
+  <div id="love-counter">Love Counter: 0</div>
+
+  <header id="video-section">
+    <video autoplay muted loop>
+      <source src="slow lapse final 2.mp4" type="video/mp4">
+    </video>
+    <div class="overlay">
+      <h1>To the girl who lights up my night skies</h1>
+      <p>Dedicated to you, always.</p>
+    </div>
+  </header>
+
+  <section class="gallery fade-in">
+    <div class="polaroid">
+      <img src="daylightmoonluni.jpg" alt="scene 1" />
+      <div class="caption">Our Moon, Our Moment 🌙</div>
+    </div>
+    <div class="polaroid">
+      <img src="Luni Moon 2 Done.jpg" alt="scene 2" />
+      <div class="caption">That Look in Your Eyes ✨</div>
+    </div>
+    <div class="polaroid">
+      <img src="Luni Moon 3 Done.jpg" alt="scene 3" />
+      <div class="caption">You, Me & the Stars 💫</div>
+    </div>
+    <div class="polaroid">
+      <img src="Luni Moon 4 Done.jpg" alt="scene 4" />
+      <div class="caption">Where Magic Began 🐰</div>
+    </div>
+    <div class="polaroid">
+      <img src="Luni Moon 5 TIFF Files_lapl5_ap1489.jpg" alt="scene 5" />
+      <div class="caption">The Moon Smiled Back 🩵</div>
+    </div>
+    <div class="polaroid">
+      <img src="Luni Moon 6.jpg" alt="scene 6" />
+      <div class="caption">Crescent Dreams 🍓</div>
+    </div>
+    <div class="polaroid">
+      <img src="Luni Crescent.jpg" alt="scene 7" />
+      <div class="caption">Gentle Nights, Bright Eyes</div>
+    </div>
+    <div class="polaroid">
+      <img src="Luni Eid Moon Final.jpg" alt="scene 8" />
+      <div class="caption">Eid, and You 💜</div>
+    </div>
+    <div class="polaroid">
+      <img src="4.4.2025 Moon - Dedicated to my one and only Luni.jpg" alt="scene 9" />
+      <div class="caption">For You, Always 🌌</div>
+    </div>
+  </section>
+
+  <section class="connect-stars-section fade-in">
+  <h2>Draw Your Name in Stars ✨</h2>
+  <p>Click to place stars, then click stars to connect them and create your name "Lunar", or anything you wish to draw Luni</p>
+  <button id="resetButton" class="btn">Reset Canvas</button>
+  <button id="saveButton" class="btn">Save Constellation</button>
+  <div class="star-canvas-container">
+    <canvas id="starCanvas" width="800" height="500"></canvas>
+  </div>
+  </section>
+
+  <div class="lightbox" id="lightbox">
+    <img src="" alt="Full Image" id="lightbox-img" />
+  </div>
+
+  <section class="timeline fade-in">
+    <h2>Our Journey</h2>
+    <div class="timeline-event">
+      <h3>✨ We Met — Jan 2022</h3>
+      <p>The stars aligned and we found each other.</p>
+    </div>
+    <div class="timeline-event">
+      <h3>🌌 First Starry Shoot — Apr 2022</h3>
+      <p>I saw you shining brighter than the night sky.</p>
+    </div>
+    <div class="timeline-event">
+      <h3>💫 Our First Trip — Oct 2022</h3>
+      <p>Captured memories beneath a thousand stars.</p>
+    </div>
+  </section>
+
+  <section class="story fade-in">
+    <h2>Our Story</h2>
+    <p>This isn't just about stars...</p>
+  </section>
+
+  <section class="contact fade-in">
+    <h2>With Love</h2>
+    <p>Happy Birthday, my love 💙</p>
+  </section>
+
+  <nav class="floating-nav">
+    <button id="emoji-toggle">Turn Off Emojis</button>
+    <a href="#video-section" id="scroll-top">⬆ Back to Top</a>
+  </nav>
+
+  <script>
+    const faders = document.querySelectorAll('.fade-in');
+    const observer = new IntersectionObserver(entries => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('visible');
+        }
+      });
+    }, { threshold: 0.3 });
+    faders.forEach(fade => observer.observe(fade));
+
+    const lightbox = document.getElementById('lightbox');
+    const lightboxImg = document.getElementById('lightbox-img');
+
+    document.querySelectorAll('.gallery img').forEach(img => {
+      img.addEventListener('click', () => {
+        lightboxImg.src = img.src;
+        lightbox.style.display = 'flex';
+        
+        // Trigger reflow
+        void lightbox.offsetWidth;
+        
+        // Start animation
+        lightbox.classList.add('active');
+      });
+    });
+
+    lightbox.addEventListener('click', () => {
+      lightbox.classList.remove('active');
+      lightbox.classList.add('closing');
+      
+      setTimeout(() => {
+        lightbox.style.display = 'none';
+        lightbox.classList.remove('closing');
+      }, 500); // Match this with CSS transition duration
+    });
+
+    const emojis = ['❤️', '🌙', '🍓', '🐰', '🐇'];
+    const popSound = document.getElementById('pop-sound');
+    const loveCounterDisplay = document.getElementById('love-counter');
+    let loveCount = 0;
+    let activeEmojis = [];
+    let emojisEnabled = true;
+    let emojiInterval;
+
+    function createFloatingEmoji() {
+      if (!emojisEnabled || activeEmojis.length >= 20) return;
+
+      const emoji = document.createElement('div');
+      emoji.className = 'floating-emoji';
+      emoji.textContent = emojis[Math.floor(Math.random() * emojis.length)];
+      emoji.style.left = `${Math.random() * 90}%`;
+      emoji.style.top = `${Math.random() * 80}%`;
+      emoji.style.animationDuration = `${3 + Math.random() * 3}s`;
+
+      emoji.addEventListener('click', (e) => {
+        popSound.currentTime = 0;
+        popSound.play();
+        const pop = document.createElement('div');
+        pop.className = 'pop-text';
+        pop.textContent = 'Luni';
+        pop.style.left = `${e.pageX}px`;
+        pop.style.top = `${e.pageY}px`;
+        document.body.appendChild(pop);
+        setTimeout(() => pop.remove(), 1500);
+        emoji.remove();
+        activeEmojis = activeEmojis.filter(el => el !== emoji);
+        loveCount++;
+        loveCounterDisplay.textContent = `Love Counter: ${loveCount}`;
+      });
+
+      document.body.appendChild(emoji);
+      activeEmojis.push(emoji);
+    }
+
+    function toggleEmojis() {
+      emojisEnabled = !emojisEnabled;
+      const toggleButton = document.getElementById('emoji-toggle');
+      toggleButton.textContent = emojisEnabled ? 'Turn Off Emojis' : 'Turn On Emojis';
+      
+      if (!emojisEnabled) {
+        // Remove all active emojis
+        activeEmojis.forEach(emoji => emoji.remove());
+        activeEmojis = [];
+      }
+    }
+
+    // Initialize emoji creation
+    emojiInterval = setInterval(createFloatingEmoji, 1500);
+    document.getElementById('emoji-toggle').addEventListener('click', toggleEmojis);
+
+    function createShootingStar() {
+      if (Math.random() > 0.5) return; // 30% chance to create a shooting star
+
+      const star = document.createElement('div');
+      star.className = 'shooting-star';
+
+      // Random start position (top-right of screen)
+      const startX = window.innerWidth;
+      const startY = Math.random() * window.innerHeight * 0.3;
+
+      // Random end position (bottom-left of screen)
+      const endX = -100;
+      const endY = startY + 200 + Math.random() * 200;
+
+      star.style.left = `${startX}px`;
+      star.style.top = `${startY}px`;
+
+      // Click interaction: Make a Wish Luni!
+      star.addEventListener('click', (e) => {
+        const wish = document.createElement('div');
+        wish.className = 'pop-text';
+        wish.textContent = 'Make a Wish Luni!';
+        wish.style.left = `${e.pageX}px`;
+        wish.style.top = `${e.pageY}px`;
+        document.body.appendChild(wish);
+        setTimeout(() => wish.remove(), 1500);
+        star.remove();
+      });
+
+      document.body.appendChild(star);
+
+      // Animate the shooting star
+      const duration = 2000 + Math.random() * 1000;
+
+      const animation = star.animate([
+        {
+          opacity: 0,
+          transform: 'translate(0, 0)'
+        },
+        {
+          opacity: 1,
+          offset: 0.1
+        },
+        {
+          opacity: 1,
+          offset: 0.8
+        },
+        {
+          opacity: 0,
+          transform: `translate(${endX - startX}px, ${endY - startY}px)`
+        }
+      ], {
+        duration: duration,
+        easing: 'linear'
+      });
+
+      // Remove star after animation ends (if it wasn't clicked)
+      setTimeout(() => {
+        if (star.parentNode) {
+          star.remove();
+        }
+      }, duration);
+    }
+
+    // Create shooting stars periodically
+    setInterval(createShootingStar, 4000);
+    // Also create one shortly after page load
+    setTimeout(createShootingStar, 1500);
+
+    document.getElementById('scroll-top').addEventListener('click', function (e) {
+      e.preventDefault();
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    });
+
+    const canvas = document.getElementById('starCanvas');
+    const ctx = canvas.getContext('2d');
+    let stars = [];
+    let lines = [];
+    let selectedStar = null;
+
+    // Star glow effect
+    function drawStar(x, y, selected = false) {
+      const gradient = ctx.createRadialGradient(x, y, 0, x, y, 10);
+      gradient.addColorStop(0, selected ? "#ff77e9" : "#fff");
+      gradient.addColorStop(1, "transparent");
+      ctx.beginPath();
+      ctx.fillStyle = gradient;
+      ctx.arc(x, y, 5, 0, Math.PI * 2);
+      ctx.fill();
+    }
+
+    function drawLine(from, to) {
+      ctx.beginPath();
+      ctx.moveTo(from.x, from.y);
+      ctx.lineTo(to.x, to.y);
+      ctx.strokeStyle = '#61dafb';
+      ctx.lineWidth = 2;
+      ctx.stroke();
+    }
+
+    function redrawCanvas() {
+      ctx.clearRect(0, 0, canvas.width, canvas.height);
+      lines.forEach(line => drawLine(line[0], line[1]));
+      stars.forEach(star => drawStar(star.x, star.y, star === selectedStar));
+    }
+
+    canvas.addEventListener('click', (e) => {
+      const rect = canvas.getBoundingClientRect();
+      const clickX = e.clientX - rect.left;
+      const clickY = e.clientY - rect.top;
+
+      const clickedStar = stars.find(star => Math.hypot(star.x - clickX, star.y - clickY) < 10);
+
+      if (clickedStar) {
+        if (selectedStar && selectedStar !== clickedStar) {
+          lines.push([selectedStar, clickedStar]);
+          selectedStar = null;
+        } else {
+          selectedStar = clickedStar;
+        }
+      } else {
+        stars.push({ x: clickX, y: clickY });
+      }
+
+      redrawCanvas();
+    });
+
+    document.getElementById('resetButton').addEventListener('click', () => {
+      stars = [];
+      lines = [];
+      selectedStar = null;
+      redrawCanvas();
+    });
+
+    document.getElementById('saveButton').addEventListener('click', () => {
+      const image = canvas.toDataURL('image/png');
+      const link = document.createElement('a');
+      link.href = image;
+      link.download = 'constellation.png';
+      link.click();
+    });
+
+  </script>
+</body>
+</html>
