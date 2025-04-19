@@ -172,7 +172,7 @@
     .connect-stars-section {
       padding: 4rem 2rem;
       text-align: center;
-      background: url('your-starry-background.jpg') center/cover no-repeat;
+      background: radial-gradient(circle at center, #0b0c10 0%, #1a1b26 100%);
       color: #fff;
     }
 
@@ -188,20 +188,34 @@
       background-color: rgba(0, 0, 0, 0.4);
       cursor: crosshair;
     }
-    .btn {
-      padding: 10px 20px;
-      background-color: #ff77e9;
-      border: none;
-      color: #fff;
-      font-size: 16px;
-      cursor: pointer;
-      border-radius: 8px;
-      margin-top: 20px;
-      transition: background-color 0.3s;
+    button.btn {
+      min-width: 44px !important;
+      min-height: 44px !important;
+      padding: 0.8rem 1.5rem !important;
+      background-color: #ff77e9 !important;
+      border: none !important;
+      color: #fff !important;
+      font-size: clamp(1rem, 3vw, 1.2rem) !important;
+      cursor: pointer !important;
+      border-radius: 8px !important;
+      margin: 1rem 0.5rem !important;
+      transition: background-color 0.3s, transform 0.2s !important;
+      pointer-events: auto !important;
+      z-index: 1000 !important; /* High z-index to avoid overlap */
+      position: relative !important;
     }
-
-    .btn:hover {
-      background-color: #d65f9d;
+    button.btn:hover {
+      background-color: #d65f9d !important;
+    }
+    button.btn:active {
+      background-color: #b84a8c !important;
+      transform: scale(0.95) !important;
+    }
+    
+    button#lullaby-btn, button#reset-whispers-btn {
+      pointer-events: auto !important;
+      cursor: pointer !important;
+      z-index: 1000 !important;
     }
 
     .constellation-section {
@@ -874,6 +888,329 @@
       0%, 100% { opacity: 0.1; }
       50% { opacity: 0.3; }
     }
+
+
+    .telescope-dreams-section {
+      padding: 4rem 2rem;
+      text-align: center;
+      background: radial-gradient(circle at center, #0b0c10 0%, #1a1b26 100%);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .telescope-dreams-section h2 {
+      color: #ff77e9;
+      text-shadow: 0 0 10px rgba(255, 119, 233, 0.5);
+      margin-bottom: 1rem;
+    }
+
+    .telescope-dreams-section p {
+      color: #fff;
+      font-size: 1.2rem;
+      margin-bottom: 2rem;
+    }
+
+    .dreams-container {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 1.5rem;
+      max-width: 600px;
+      margin: 0 auto;
+      position: relative;
+    }
+
+    #dreams-canvas {
+      border: 2px solid #61dafb;
+      border-radius: 12px;
+      background: rgba(0, 0, 0, 0.4);
+      cursor: crosshair;
+    }
+
+    .dreams-controls {
+      display: flex;
+      gap: 1rem;
+    }
+
+    #dreams-counter {
+      color: #ff77e9;
+      font-weight: bold;
+      font-size: 1.2rem;
+      text-shadow: 0 0 5px rgba(255, 119, 233, 0.5);
+    }
+
+    .dream-bubble {
+      position: absolute;
+      width: 40px;
+      height: 40px;
+      border-radius: 50%;
+      background: radial-gradient(circle, rgba(255, 119, 233, 0.8) 0%, rgba(97, 218, 251, 0.5) 70%);
+      box-shadow: 0 0 10px rgba(255, 119, 233, 0.5);
+      animation: floatBubble 4s infinite ease-in-out;
+      z-index: 10;
+      text-align: center;
+      line-height: 40px;
+      font-size: 1.5rem;
+      color: #fff;
+    }
+
+    .dream-message {
+      position: absolute;
+      color: #ff77e9;
+      font-weight: bold;
+      font-size: 1.2rem;
+      pointer-events: none;
+      animation: pulseGlitter 1.2s ease forwards;
+      text-shadow: 0 0 4px #ff77e9, 0 0 8px #fff;
+      z-index: 1001; /* Above snapshot-frame */
+      white-space: nowrap;
+    }
+
+    .dream-sparkle {
+      position: absolute;
+      width: 10px;
+      height: 10px;
+      background: #ffeb3b;
+      clip-path: polygon(50% 0%, 61% 35%, 98% 35%, 68% 57%, 79% 91%, 50% 70%, 21% 91%, 32% 57%, 2% 35%, 39% 35%);
+      animation: twinkle 0.8s ease forwards;
+      pointer-events: none;
+      z-index: 1001; /* Above snapshot-frame */
+    }
+
+    @keyframes floatBubble {
+      0% { transform: translateY(0); }
+      50% { transform: translateY(-20px); }
+      100% { transform: translateY(0); }
+    }
+
+    .telescope-dreams-section::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="100" height="100"><circle cx="20" cy="20" r="2" fill="rgba(255, 119, 233, 0.3)" /><circle cx="80" cy="80" r="2" fill="rgba(255, 119, 233, 0.3)" /></svg>') repeat;
+      opacity: 0.1;
+      animation: twinkle 8s infinite;
+    }
+
+    .midnight-whispers-section {
+      padding: 2rem 1rem !important;
+      text-align: center !important;
+      position: relative !important;
+      z-index: 500 !important; /* Ensure section is above other content */
+    }
+
+    .midnight-whispers-section::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="100" height="100"><circle cx="10" cy="10" r="1" fill="white" /><circle cx="50" cy="50" r="1.5" fill="white" /><circle cx="90" cy="90" r="1" fill="white" /></svg>') repeat;
+      opacity: 0.1;
+      animation: twinkle 8s infinite;
+    }
+    @keyframes twinkle {
+      0%, 100% { opacity: 0.1; }
+      50% { opacity: 0.3; }
+    }
+    .midnight-whispers-section h2 {
+      color: #ff77e9;
+      text-shadow: 0 0 10px rgba(255, 119, 233, 0.5);
+      margin-bottom: 0.5rem;
+    }
+    .midnight-whispers-section p {
+      color: #fff;
+      font-size: 1.2rem;
+      margin-bottom: 1.5rem;
+    }
+    .whisper-jar {
+      width: clamp(150px, 30vw, 200px) !important;
+      height: clamp(200px, 40vw, 250px) !important;
+      background: radial-gradient(circle, rgba(255, 119, 233, 0.3) 0%, transparent 70%) !important;
+      border: 2px solid #ff77e9 !important;
+      border-radius: 20px !important;
+      margin: 2rem auto !important;
+      cursor: pointer !important;
+      pointer-events: auto !important;
+      z-index: 550 !important;
+      animation: float 4s ease-in-out infinite !important;
+      position: relative !important;
+      overflow: hidden !important; /* Ensure particles stay inside */
+    }
+    .whisper-jar:hover {
+      animation: shake 0.5s ease !important;
+    }
+    .midnight-whispers-section.lullaby-playing .whisper-jar {
+      animation: lullabyPulse 2s ease-in-out infinite !important;
+    }
+
+    .jar-particles {
+      position: absolute !important;
+      top: 0 !important;
+      left: 0 !important;
+      width: 100% !important;
+      height: 100% !important;
+    }
+    .jar-particles::before,
+    .jar-particles::after,
+    .jar-particles > div {
+      content: '' !important;
+      position: absolute !important;
+      width: 6px !important;
+      height: 6px !important;
+      background: #ff77e9 !important;
+      border-radius: 50% !important;
+      box-shadow: 0 0 8px rgba(255, 119, 233, 0.7) !important;
+      animation: floatParticle 6s infinite ease-in-out !important;
+    }
+    .jar-particles.chaos::before,
+    .jar-particles.chaos::after,
+    .jar-particles.chaos > div {
+      animation: chaosParticle 1.5s ease-in-out !important;
+    }
+    .jar-particles::before { top: 20%; left: 30%; }
+    .jar-particles::after { top: 50%; left: 70%; animation-delay: 1s; }
+    .jar-particles > div:nth-child(1) { top: 70%; left: 20%; animation-delay: 2s; }
+    .jar-particles > div:nth-child(2) { top: 30%; left: 50%; animation-delay: 3s; }
+    .jar-particles > div:nth-child(3) { top: 60%; left: 80%; animation-delay: 4s; }
+    @keyframes float {
+      0%, 100% { transform: translateY(0); }
+      50% { transform: translateY(-10px); }
+    }
+    @keyframes shake {
+      0%, 100% { transform: translateX(0); }
+      25% { transform: translateX(-5px) rotate(-2deg); }
+      75% { transform: translateX(5px) rotate(2deg); }
+    }
+    @keyframes lullabyPulse {
+      0%, 100% { transform: scale(1); opacity: 0.8; }
+      50% { transform: scale(1.1); opacity: 1; }
+    }
+    @keyframes floatParticle {
+      0% { transform: translate(0, 0); opacity: 0.7; }
+      50% { transform: translate(10px, -20px); opacity: 1; }
+      100% { transform: translate(-10px, 0); opacity: 0.7; }
+    }
+    @keyframes chaosParticle {
+      0% { transform: translate(0, 0); opacity: 0.7; }
+      25% { transform: translate(calc(80px * (2 * var(--rand1) - 1)), calc(100px * (2 * var(--rand2) - 1))); opacity: 1; }
+      50% { transform: translate(calc(80px * (2 * var(--rand3) - 1)), calc(100px * (2 * var(--rand4) - 1))); opacity: 0.8; }
+      75% { transform: translate(calc(80px * (2 * var(--rand5) - 1)), calc(100px * (2 * var(--rand6) - 1))); opacity: 1; }
+      100% { transform: translate(0, 0); opacity: 0.7; }
+    }
+
+    #whisper-message {
+      position: absolute !important;
+      top: 50% !important;
+      left: 50% !important;
+      transform: translate(-50%, -50%) !important;
+      background: rgba(0, 0, 0, 0.8) !important;
+      color: #fff !important;
+      padding: 0.8rem !important;
+      border-radius: 8px !important;
+      font-size: clamp(0.9rem, 2vw, 1rem) !important;
+      max-width: clamp(250px, 80vw, 350px) !important;
+      opacity: 0 !important;
+      pointer-events: none !important; /* Prevent blocking buttons */
+      transition: opacity 0.5s, transform 0.5s !important;
+      box-shadow: 0 0 10px rgba(255, 119, 233, 0.5) !important;
+      z-index: 600 !important;
+    }
+    #whisper-message.show {
+      opacity: 1 !important;
+      transform: translate(-50%, -50%) scale(1.05) !important;
+      animation: sparkle 1s ease-out !important;
+    }
+    @keyframes sparkle {
+      0% { box-shadow: 0 0 0 0 rgba(255, 119, 233, 0.7); }
+      50% { box-shadow: 0 0 15px 5px rgba(255, 119, 233, 0.3); }
+      100% { box-shadow: 0 0 0 0 rgba(255, 119, 233, 0); }
+    }
+    .sound-waves {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      width: clamp(200px, 50vw, 300px);
+      height: clamp(200px, 50vw, 300px);
+      pointer-events: none;
+      z-index: 5;
+    }
+    .sound-wave {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      width: 100%;
+      height: 2px;
+      background: #ff77e9;
+      opacity: 0;
+      transform: translate(-50%, -50%) scale(0.5);
+      animation: wave 3s infinite;
+    }
+
+    .sound-wave:nth-child(2) { animation-delay: 1s; }
+    .sound-wave:nth-child(3) { animation-delay: 2s; }
+    @keyframes wave {
+      0% { opacity: 0; transform: translate(-50%, -50%) scale(0.5); }
+      50% { opacity: 0.3; transform: translate(-50%, -50%) scale(1); }
+      100% { opacity: 0; transform: translate(-50%, -50%) scale(1.5); }
+    }
+    #lullaby-btn, #reset-whispers-btn {
+      min-width: 44px;
+      min-height: 44px;
+      padding: 0.8rem 1.5rem;
+      background-color: #ff77e9;
+      border: none;
+      color: #fff;
+      font-size: clamp(1rem, 3vw, 1.2rem);
+      pointer-events: auto;
+      cursor: pointer;
+      border-radius: 8px;
+      margin: 1rem 0.5rem;
+      transition: background-color 0.3s, transform 0.2s;
+    }
+    #lullaby-btn:hover, #reset-whispers-btn:hover {
+      background-color: #d65f9d;
+    }
+    #lullaby-btn:active, #reset-whispers-btn:active {
+      background-color: #b84a8c;
+      transform: scale(0.95);
+    }
+
+    /* Sparkle particles for Sparkle Shower */
+    .sparkle-particle {
+      position: absolute !important;
+      width: 6px !important;
+      height: 6px !important;
+      background: #ff77e9 !important;
+      border-radius: 50% !important;
+      box-shadow: 0 0 8px rgba(255, 119, 233, 0.7) !important;
+      pointer-events: none !important;
+      z-index: 600 !important;
+      opacity: 0 !important;
+    }
+    .jar-glow {
+      box-shadow: 0 0 20px 10px rgba(255, 119, 233, 0.5) !important;
+      transition: box-shadow 0.3s ease !important;
+    }
+
+    @media (max-width: 768px) {
+      .dreams-container {
+        max-width: 100%;
+      }
+      #dreams-canvas {
+        width: 100%;
+        height: 300px;
+      }
+      .dreams-controls {
+        flex-direction: column;
+        align-items: center;
+      }
+    }
     @media screen and (max-width: 768px) {
       header h1 {
         font-size: 1.8rem;
@@ -915,7 +1252,8 @@
   <audio id="pop-sound" src="0416.MP3" preload="auto"></audio>
   <audio id="hug-sound" src="hug-sound.mp3" preload="auto"></audio>
   <audio id="shutter-sound" src="shutter.MP3" preload="auto"></audio>
-  <audio id="chime-sound" src="chime.mp3" preload="auto"></audio>
+  <audio id="chime-sound" src="0416.mp3" preload="auto"></audio>
+  <audio id="lullaby-sound" src="lullaby.MP3" preload="auto"></audio>
   <div id="love-counter">Love Amount: 0</div>
 
   <header id="video-section">
@@ -1051,6 +1389,17 @@
     </div>
   </section>
 
+  <section class="midnight-whispers-section">
+    <h2>Midnight Whispers for My one and only sweet Luni</h2>
+    <p>Luni, when you feel you cannot sleep, shake and click the jar, and play a cute lullaby to feel my love wrap around you.</p>
+    <button id="lullaby-btn" class="btn">Play a cute Lullaby</button>
+    <div class="whisper-jar">
+      <div class="jar-particles"><div></div><div></div><div></div></div>
+    </div>
+    <div id="whisper-message"></div>
+    <button id="shake-jar-btn" class="btn">Shake the Jar of whispers</button>
+  </section>
+
   <section class="timeline fade-in">
     <h2>Our Journey</h2>
     <div class="timeline-event">
@@ -1084,568 +1433,712 @@
 
   <script>
     document.addEventListener('DOMContentLoaded', () => {
-      // Fade-in animations
-      const faders = document.querySelectorAll('.fade-in');
-      const observer = new IntersectionObserver(entries => {
-        entries.forEach(entry => {
-          if (entry.isIntersecting) {
-            entry.target.classList.add('visible');
-          }
+      console.log('DOM fully loaded, initializing all sections...');
+
+      // Gallery Section
+      (function () {
+        const lightbox = document.getElementById('lightbox');
+        const lightboxImg = document.getElementById('lightbox-img');
+        document.querySelectorAll('.gallery img').forEach(img => {
+          img.addEventListener('click', () => {
+            lightboxImg.src = img.src;
+            lightbox.style.display = 'flex';
+            void lightbox.offsetWidth;
+            lightbox.classList.add('active');
+          });
         });
-      }, { threshold: 0.3 });
-      faders.forEach(fade => observer.observe(fade));
-    
-      // Lightbox for gallery
-      const lightbox = document.getElementById('lightbox');
-      const lightboxImg = document.getElementById('lightbox-img');
-      document.querySelectorAll('.gallery img').forEach(img => {
-        img.addEventListener('click', () => {
-          lightboxImg.src = img.src;
-          lightbox.style.display = 'flex';
-          void lightbox.offsetWidth;
-          lightbox.classList.add('active');
+        lightbox.addEventListener('click', () => {
+          lightbox.classList.remove('active');
+          lightbox.classList.add('closing');
+          setTimeout(() => {
+            lightbox.style.display = 'none';
+            lightbox.classList.remove('closing');
+          }, 500);
         });
-      });
-      lightbox.addEventListener('click', () => {
-        lightbox.classList.remove('active');
-        lightbox.classList.add('closing');
-        setTimeout(() => {
-          lightbox.style.display = 'none';
-          lightbox.classList.remove('closing');
-        }, 500);
-      });
-    
-      // Floating emojis and love counter
-      const emojis = ['❤️', '🌙', '🍓', '🐰', '🐇'];
-      const popSound = document.getElementById('pop-sound');
-      const loveCounterDisplay = document.getElementById('love-counter');
-      let loveCount = 0;
-      let activeEmojis = [];
-      let emojisEnabled = true;
-      let emojiInterval;
-    
-      function createFloatingEmoji() {
-        if (!emojisEnabled || activeEmojis.length >= 15) return;
-        const emoji = document.createElement('div');
-        emoji.className = 'floating-emoji';
-        emoji.textContent = emojis[Math.floor(Math.random() * emojis.length)];
-        emoji.style.left = `${Math.random() * 90}%`;
-        emoji.style.top = `${Math.random() * 90}%`;
-        emoji.style.animationDuration = `${3 + Math.random() * 3}s`;
-        emoji.addEventListener('click', (e) => {
-          popSound.currentTime = 0;
-          popSound.play();
-          const pop = document.createElement('div');
-          pop.className = 'pop-text';
-          pop.textContent = 'Luni';
-          pop.style.left = `${e.pageX}px`;
-          pop.style.top = `${e.pageY}px`;
-          document.body.appendChild(pop);
-          setTimeout(() => pop.remove(), 1500);
-          emoji.remove();
-          activeEmojis = activeEmojis.filter(el => el !== emoji);
-          loveCount++;
-          loveCounterDisplay.textContent = `Love Amount: ${loveCount}`;
-        });
-        document.body.appendChild(emoji);
-        activeEmojis.push(emoji);
-      }
-    
-      function toggleEmojis() {
-        emojisEnabled = !emojisEnabled;
-        const toggleButton = document.getElementById('emoji-toggle');
-        toggleButton.textContent = emojisEnabled ? 'Turn Off Emojis' : 'Turn On Emojis';
-        if (!emojisEnabled) {
-          activeEmojis.forEach(emoji => emoji.remove());
-          activeEmojis = [];
+      })();
+
+      // Fade-in Animations
+      (function () {
+        const faders = document.querySelectorAll('.fade-in');
+        const observer = new IntersectionObserver(entries => {
+          entries.forEach(entry => {
+            if (entry.isIntersecting) {
+              entry.target.classList.add('visible');
+            }
+          });
+        }, { threshold: 0.3 });
+        faders.forEach(fade => observer.observe(fade));
+      })();
+
+      // Floating Emojis and Love Counter
+      (function () {
+        const emojis = ['❤️', '🌙', '🍓', '🐰', '🐇'];
+        const popSound = document.getElementById('pop-sound');
+        const loveCounterDisplay = document.getElementById('love-counter');
+        let loveCount = 0;
+        let activeEmojis = [];
+        let emojisEnabled = true;
+        let emojiInterval;
+
+        function createFloatingEmoji() {
+          if (!emojisEnabled || activeEmojis.length >= 15) return;
+          const emoji = document.createElement('div');
+          emoji.className = 'floating-emoji';
+          emoji.textContent = emojis[Math.floor(Math.random() * emojis.length)];
+          emoji.style.left = `${Math.random() * 90}%`;
+          emoji.style.top = `${Math.random() * 90}%`;
+          emoji.style.animationDuration = `${3 + Math.random() * 3}s`;
+          emoji.addEventListener('click', (e) => {
+            popSound.currentTime = 0;
+            popSound.play();
+            const pop = document.createElement('div');
+            pop.className = 'pop-text';
+            pop.textContent = 'Luni';
+            pop.style.left = `${e.pageX}px`;
+            pop.style.top = `${e.pageY}px`;
+            document.body.appendChild(pop);
+            setTimeout(() => pop.remove(), 1500);
+            emoji.remove();
+            activeEmojis = activeEmojis.filter(el => el !== emoji);
+            loveCount++;
+            loveCounterDisplay.textContent = `Love Amount: ${loveCount}`;
+          });
+          document.body.appendChild(emoji);
+          activeEmojis.push(emoji);
         }
-      }
-    
-      emojiInterval = setInterval(createFloatingEmoji, 1500);
-      document.getElementById('emoji-toggle').addEventListener('click', toggleEmojis);
-    
-      // Shooting stars
-      function createShootingStar() {
-        if (Math.random() > 0.3) return;
-        const star = document.createElement('div');
-        star.className = 'shooting-star';
-        const startX = window.innerWidth;
-        const startY = Math.random() * window.innerHeight * 0.3;
-        const endX = -100;
-        const endY = startY + 200 + Math.random() * 200;
-        star.style.left = `${startX}px`;
-        star.style.top = `${startY}px`;
-        star.addEventListener('click', (e) => {
-          const wish = document.createElement('div');
-          wish.className = 'pop-text';
-          wish.textContent = 'Make a Wish Luni!';
-          wish.style.left = `${e.pageX}px`;
-          wish.style.top = `${e.pageY}px`;
-          document.body.appendChild(wish);
-          setTimeout(() => wish.remove(), 1500);
-          star.remove();
+
+        function toggleEmojis() {
+          emojisEnabled = !emojisEnabled;
+          const toggleButton = document.getElementById('emoji-toggle');
+          toggleButton.textContent = emojisEnabled ? 'Turn Off Emojis' : 'Turn On Emojis';
+          if (!emojisEnabled) {
+            activeEmojis.forEach(emoji => emoji.remove());
+            activeEmojis = [];
+          }
+        }
+
+        emojiInterval = setInterval(createFloatingEmoji, 1500);
+        document.getElementById('emoji-toggle').addEventListener('click', toggleEmojis);
+      })();
+
+      // Shooting Stars
+      (function () {
+        function createShootingStar() {
+          if (Math.random() > 0.3) return;
+          const star = document.createElement('div');
+          star.className = 'shooting-star';
+          const startX = window.innerWidth;
+          const startY = Math.random() * window.innerHeight * 0.3;
+          const endX = -100;
+          const endY = startY + 200 + Math.random() * 200;
+          star.style.left = `${startX}px`;
+          star.style.top = `${startY}px`;
+          star.addEventListener('click', (e) => {
+            const wish = document.createElement('div');
+            wish.className = 'pop-text';
+            wish.textContent = 'Make a Wish Luni!';
+            wish.style.left = `${e.pageX}px`;
+            wish.style.top = `${e.pageY}px`;
+            document.body.appendChild(wish);
+            setTimeout(() => wish.remove(), 1500);
+            star.remove();
+          });
+          document.body.appendChild(star);
+          const duration = 2000 + Math.random() * 1000;
+          const animation = star.animate([
+            { opacity: 0, transform: 'translate(0, 0)' },
+            { opacity: 1, offset: 0.1 },
+            { opacity: 1, offset: 0.8 },
+            { opacity: 0, transform: `translate(${endX - startX}px, ${endY - startY}px)` }
+          ], { duration: duration, easing: 'linear' });
+          setTimeout(() => {
+            if (star.parentNode) star.remove();
+          }, duration);
+        }
+
+        setInterval(createShootingStar, 4000);
+        setTimeout(createShootingStar, 2000);
+      })();
+
+      // Scroll to Top
+      (function () {
+        document.getElementById('scroll-top').addEventListener('click', function (e) {
+          e.preventDefault();
+          window.scrollTo({ top: 0, behavior: 'smooth' });
         });
-        document.body.appendChild(star);
-        const duration = 2000 + Math.random() * 1000;
-        const animation = star.animate([
-          { opacity: 0, transform: 'translate(0, 0)' },
-          { opacity: 1, offset: 0.1 },
-          { opacity: 1, offset: 0.8 },
-          { opacity: 0, transform: `translate(${endX - startX}px, ${endY - startY}px)` }
-        ], { duration: duration, easing: 'linear' });
-        setTimeout(() => {
-          if (star.parentNode) star.remove();
-        }, duration);
-      }
-    
-      setInterval(createShootingStar, 4000);
-      setTimeout(createShootingStar, 2000);
-    
-      // Scroll to top
-      document.getElementById('scroll-top').addEventListener('click', function (e) {
-        e.preventDefault();
-        window.scrollTo({ top: 0, behavior: 'smooth' });
-      });
-    
-      // Star canvas
-      const canvas = document.getElementById('starCanvas');
-      const ctx = canvas.getContext('2d');
-      let stars = [];
-      let lines = [];
-      let selectedStar = null;
-    
-      function drawStar(x, y, selected = false) {
-        const gradient = ctx.createRadialGradient(x, y, 0, x, y, 10);
-        gradient.addColorStop(0, selected ? "#ff77e9" : "#fff");
-        gradient.addColorStop(1, "transparent");
-        ctx.beginPath();
-        ctx.fillStyle = gradient;
-        ctx.arc(x, y, 5, 0, Math.PI * 2);
-        ctx.fill();
-      }
-    
-      function drawLine(from, to) {
-        ctx.beginPath();
-        ctx.moveTo(from.x, from.y);
-        ctx.lineTo(to.x, to.y);
-        ctx.strokeStyle = '#61dafb';
-        ctx.lineWidth = 2;
-        ctx.stroke();
-      }
-    
-      function redrawCanvas() {
-        ctx.clearRect(0, 0, canvas.width, canvas.height);
-        lines.forEach(line => drawLine(line[0], line[1]));
-        stars.forEach(star => drawStar(star.x, star.y, star === selectedStar));
-      }
-    
-      canvas.addEventListener('click', (e) => {
-        const rect = canvas.getBoundingClientRect();
-        const clickX = e.clientX - rect.left;
-        const clickY = e.clientY - rect.top;
-        const clickedStar = stars.find(star => Math.hypot(star.x - clickX, star.y - clickY) < 10);
-        if (clickedStar) {
-          if (selectedStar && selectedStar !== clickedStar) {
-            lines.push([selectedStar, clickedStar]);
-            selectedStar = null;
+      })();
+
+      // Star Canvas
+      (function () {
+        const canvas = document.getElementById('starCanvas');
+        const ctx = canvas.getContext('2d');
+        let stars = [];
+        let lines = [];
+        let selectedStar = null;
+
+        function drawStar(x, y, selected = false) {
+          const gradient = ctx.createRadialGradient(x, y, 0, x, y, 10);
+          gradient.addColorStop(0, selected ? "#ff77e9" : "#fff");
+          gradient.addColorStop(1, "transparent");
+          ctx.beginPath();
+          ctx.fillStyle = gradient;
+          ctx.arc(x, y, 5, 0, Math.PI * 2);
+          ctx.fill();
+        }
+
+        function drawLine(from, to) {
+          ctx.beginPath();
+          ctx.moveTo(from.x, from.y);
+          ctx.lineTo(to.x, to.y);
+          ctx.strokeStyle = '#61dafb';
+          ctx.lineWidth = 2;
+          ctx.stroke();
+        }
+
+        function redrawCanvas() {
+          ctx.clearRect(0, 0, canvas.width, canvas.height);
+          lines.forEach(line => drawLine(line[0], line[1]));
+          stars.forEach(star => drawStar(star.x, star.y, star === selectedStar));
+        }
+
+        canvas.addEventListener('click', (e) => {
+          const rect = canvas.getBoundingClientRect();
+          const clickX = e.clientX - rect.left;
+          const clickY = e.clientY - rect.top;
+          const clickedStar = stars.find(star => Math.hypot(star.x - clickX, star.y - clickY) < 10);
+          if (clickedStar) {
+            if (selectedStar && selectedStar !== clickedStar) {
+              lines.push([selectedStar, clickedStar]);
+              selectedStar = null;
+            } else {
+              selectedStar = clickedStar;
+            }
           } else {
-            selectedStar = clickedStar;
+            stars.push({ x: clickX, y: clickY });
           }
-        } else {
-          stars.push({ x: clickX, y: clickY });
+          redrawCanvas();
+        });
+
+        document.getElementById('resetButton').addEventListener('click', () => {
+          stars = [];
+          lines = [];
+          selectedStar = null;
+          redrawCanvas();
+        });
+
+        document.getElementById('saveButton').addEventListener('click', () => {
+          const image = canvas.toDataURL('image/png');
+          const link = document.createElement('a');
+          link.href = image;
+          link.download = 'constellation.png';
+          link.click();
+        });
+      })();
+
+      // Constellation Canvas
+      (function () {
+        const canvas2 = document.getElementById('constellation-canvas');
+        const ctx2 = canvas2.getContext('2d');
+        const width = canvas2.width;
+        const height = canvas2.height;
+        const points = [
+          [200, 100], [200, 200], [250, 200],
+          [280, 100], [280, 200], [330, 200], [330, 100],
+          [360, 200], [360, 100], [410, 200], [410, 100],
+          [460, 200], [485, 100], [510, 200], [470, 160], [500, 160],
+          [540, 200], [540, 100], [590, 100], [590, 150], [540, 150], [590, 200]
+        ];
+        let i = 0;
+
+        function drawStar1(x, y) {
+          ctx2.beginPath();
+          ctx2.arc(x, y, 3, 0, Math.PI * 2);
+          ctx2.fillStyle = '#ffffff';
+          ctx2.shadowColor = '#fff';
+          ctx2.shadowBlur = 8;
+          ctx2.fill();
+          ctx2.closePath();
         }
-        redrawCanvas();
-      });
-    
-      document.getElementById('resetButton').addEventListener('click', () => {
-        stars = [];
-        lines = [];
-        selectedStar = null;
-        redrawCanvas();
-      });
-    
-      document.getElementById('saveButton').addEventListener('click', () => {
-        const image = canvas.toDataURL('image/png');
-        const link = document.createElement('a');
-        link.href = image;
-        link.download = 'constellation.png';
-        link.click();
-      });
-    
-      // Constellation canvas
-      const canvas2 = document.getElementById('constellation-canvas');
-      const ctx2 = canvas2.getContext('2d');
-      const width = canvas2.width;
-      const height = canvas2.height;
-      const points = [
-        [200, 100], [200, 200], [250, 200],
-        [280, 100], [280, 200], [330, 200], [330, 100],
-        [360, 200], [360, 100], [410, 200], [410, 100],
-        [460, 200], [485, 100], [510, 200], [470, 160], [500, 160],
-        [540, 200], [540, 100], [590, 100], [590, 150], [540, 150], [590, 200]
-      ];
-      let i = 0;
-    
-      function drawStar1(x, y) {
-        ctx2.beginPath();
-        ctx2.arc(x, y, 3, 0, Math.PI * 2);
-        ctx2.fillStyle = '#ffffff';
-        ctx2.shadowColor = '#fff';
-        ctx2.shadowBlur = 8;
-        ctx2.fill();
-        ctx2.closePath();
-      }
-    
-      function drawLine1(p1, p2) {
-        ctx2.beginPath();
-        ctx2.moveTo(p1[0], p1[1]);
-        ctx2.lineTo(p2[0], p2[1]);
-        ctx2.strokeStyle = '#61dafb';
-        ctx2.lineWidth = 2;
-        ctx2.stroke();
-        ctx2.closePath();
-      }
-    
-      function animateConnection1() {
-        if (i < points.length - 1) {
-          drawStar1(...points[i]);
-          drawLine1(points[i], points[i + 1]);
-          i++;
-          setTimeout(animateConnection1, 300);
-        } else if (i === points.length - 1) {
-          drawStar1(...points[i]);
+
+        function drawLine1(p1, p2) {
+          ctx2.beginPath();
+          ctx2.moveTo(p1[0], p1[1]);
+          ctx2.lineTo(p2[0], p2[1]);
+          ctx2.strokeStyle = '#61dafb';
+          ctx2.lineWidth = 2;
+          ctx2.stroke();
+          ctx2.closePath();
         }
-      }
-    
-      function startConstellation1() {
-        ctx2.clearRect(0, 0, width, height);
-        i = 0;
-        animateConnection1();
-      }
-    
-      const constellationSection = document.getElementById("constellation-canvas");
-      const constellationObserver = new IntersectionObserver(entries => {
-        entries.forEach(entry => {
-          if (entry.isIntersecting) {
-            startConstellation1();
-            constellationObserver.unobserve(entry.target);
+
+        function animateConnection1() {
+          if (i < points.length - 1) {
+            drawStar1(...points[i]);
+            drawLine1(points[i], points[i + 1]);
+            i++;
+            setTimeout(animateConnection1, 300);
+          } else if (i === points.length - 1) {
+            drawStar1(...points[i]);
+          }
+        }
+
+        function startConstellation1() {
+          ctx2.clearRect(0, 0, width, height);
+          i = 0;
+          animateConnection1();
+        }
+
+        const constellationSection = document.getElementById("constellation-canvas");
+        const constellationObserver = new IntersectionObserver(entries => {
+          entries.forEach(entry => {
+            if (entry.isIntersecting) {
+              startConstellation1();
+              constellationObserver.unobserve(entry.target);
+            }
+          });
+        }, { threshold: 0.5 });
+        if (constellationSection) {
+          constellationObserver.observe(constellationSection);
+        }
+      })();
+
+      // Strawberry Section
+      (function () {
+        const strawberryImg = document.getElementById("strawberry-img");
+        const biteMessage = document.getElementById("bite-message");
+        const moreBtn = document.getElementById("more-btn");
+        const fullBtn = document.getElementById("full-btn");
+        let strawberryBiteCount = 0;
+        const strawberryImages = [
+          "strawberry1.png",
+          "strawberry2.png",
+          "strawberry3.png",
+          "strawberry4.png",
+          "strawberry5.png"
+        ];
+
+        strawberryImg.addEventListener("click", () => {
+          if (strawberryBiteCount < strawberryImages.length - 1) {
+            strawberryBiteCount++;
+            strawberryImg.src = strawberryImages[strawberryBiteCount];
+          } else if (strawberryBiteCount === strawberryImages.length - 1) {
+            strawberryImg.src = strawberryImages[strawberryBiteCount];
+            strawberryImg.style.opacity = "0";
           }
         });
-      }, { threshold: 0.5 });
-      if (constellationSection) {
-        constellationObserver.observe(constellationSection);
-      }
-    
-      // Strawberry section
-      const strawberryImg = document.getElementById("strawberry-img");
-      const biteMessage = document.getElementById("bite-message");
-      const moreBtn = document.getElementById("more-btn");
-      const fullBtn = document.getElementById("full-btn");
-      let strawberryBiteCount = 0;
-      const strawberryImages = [
-        "strawberry1.png",
-        "strawberry2.png",
-        "strawberry3.png",
-        "strawberry4.png",
-        "strawberry5.png"
-      ];
-    
-      strawberryImg.addEventListener("click", () => {
-        if (strawberryBiteCount < strawberryImages.length - 1) {
-          strawberryBiteCount++;
-          strawberryImg.src = strawberryImages[strawberryBiteCount];
-        } else if (strawberryBiteCount === strawberryImages.length - 1) {
-          strawberryImg.src = strawberryImages[strawberryBiteCount];
-          strawberryImg.style.opacity = "0";
+
+        moreBtn.addEventListener("click", () => {
+          strawberryBiteCount = 0;
+          strawberryImg.src = strawberryImages[0];
+          strawberryImg.style.opacity = "1";
+          biteMessage.classList.add("hidden");
+          biteMessage.classList.remove("show");
+        });
+
+        fullBtn.addEventListener("click", () => {
+          biteMessage.classList.remove("hidden");
+          biteMessage.classList.add("show");
+        });
+      })();
+
+      // Ice Cream Section
+      (function () {
+        const icecreamImg = document.getElementById("icecream-img");
+        const icecreamMessage = document.getElementById("icecream-message");
+        const moreIcecreamBtn = document.getElementById("more-icecream-btn");
+        let icecreamBiteCount = 0;
+        const icecreamImages = [
+          "icecream-full.png",
+          "icecream-bite1.png",
+          "icecream-bite2.png",
+          "icecream-bite3.png",
+          "icecream-bite4.png",
+          "icecream-empty.png"
+        ];
+
+        function initIcecream() {
+          icecreamBiteCount = 0;
+          icecreamImg.src = icecreamImages[0];
+          icecreamImg.style.opacity = "1";
+          icecreamMessage.classList.remove("show");
         }
-      });
-    
-      moreBtn.addEventListener("click", () => {
-        strawberryBiteCount = 0;
-        strawberryImg.src = strawberryImages[0];
-        strawberryImg.style.opacity = "1";
-        biteMessage.classList.add("hidden");
-        biteMessage.classList.remove("show");
-      });
-    
-      fullBtn.addEventListener("click", () => {
-        biteMessage.classList.remove("hidden");
-        biteMessage.classList.add("show");
-      });
-    
-      // Ice cream section
-      const icecreamImg = document.getElementById("icecream-img");
-      const icecreamMessage = document.getElementById("icecream-message");
-      const moreIcecreamBtn = document.getElementById("more-icecream-btn");
-      let icecreamBiteCount = 0;
-      const icecreamImages = [
-        "icecream-full.png",
-        "icecream-bite1.png",
-        "icecream-bite2.png",
-        "icecream-bite3.png",
-        "icecream-bite4.png",
-        "icecream-empty.png"
-      ];
-    
-      function initIcecream() {
-        icecreamBiteCount = 0;
-        icecreamImg.src = icecreamImages[0];
-        icecreamImg.style.opacity = "1";
-        icecreamMessage.classList.remove("show");
-      }
-    
-      icecreamImg.addEventListener("click", () => {
-        if (icecreamBiteCount < icecreamImages.length - 1) {
-          icecreamBiteCount++;
-          icecreamImg.src = icecreamImages[icecreamBiteCount];
-          icecreamImg.classList.add("shrink");
-          setTimeout(() => icecreamImg.classList.remove("shrink"), 300);
-        }
-        if (icecreamBiteCount === icecreamImages.length - 1) {
-          icecreamMessage.classList.add("show");
-        }
-      });
-    
-      moreIcecreamBtn.addEventListener("click", initIcecream);
-      initIcecream();
-    
-      // Telescope section
-      const canvas3 = document.getElementById("telescope-canvas");
-      const ctx3 = canvas3.getContext("2d");
-      const moonImg = new Image();
-      moonImg.src = "moon.jpg";
-      let offsetX = 0;
-      let offsetY = 0;
-      let zoom = 1.5;
-      let isDragging = false;
-      let dragStartX, dragStartY;
-      let photosTaken = 0;
-      const popup = document.getElementById("moon-photo-popup");
-      const popupImg = document.getElementById("captured-photo");
-      const captionText = document.getElementById("caption-text");
-      const photoCounter = document.getElementById("photo-count");
-      const shutterSound = document.getElementById("shutter-sound");
-    
-      canvas3.addEventListener("mousedown", (e) => {
-        isDragging = true;
-        dragStartX = e.offsetX;
-        dragStartY = e.offsetY;
-      });
-      canvas3.addEventListener("mouseup", () => isDragging = false);
-      canvas3.addEventListener("mouseleave", () => isDragging = false);
-      canvas3.addEventListener("mousemove", (e) => {
-        if (isDragging) {
-          offsetX += (e.offsetX - dragStartX) / zoom;
-          offsetY += (e.offsetY - dragStartY) / zoom;
+
+        icecreamImg.addEventListener("click", () => {
+          if (icecreamBiteCount < icecreamImages.length - 1) {
+            icecreamBiteCount++;
+            icecreamImg.src = icecreamImages[icecreamBiteCount];
+            icecreamImg.classList.add("shrink");
+            setTimeout(() => icecreamImg.classList.remove("shrink"), 300);
+          }
+          if (icecreamBiteCount === icecreamImages.length - 1) {
+            icecreamMessage.classList.add("show");
+          }
+        });
+
+        moreIcecreamBtn.addEventListener("click", initIcecream);
+        initIcecream();
+      })();
+
+      // Telescope Section
+      (function () {
+        const canvas3 = document.getElementById("telescope-canvas");
+        const ctx3 = canvas3.getContext("2d");
+        const moonImg = new Image();
+        moonImg.src = "moon.jpg";
+        let offsetX = 0;
+        let offsetY = 0;
+        let zoom = 1.5;
+        let isDragging = false;
+        let dragStartX, dragStartY;
+        let photosTaken = 0;
+        const popup = document.getElementById("moon-photo-popup");
+        const popupImg = document.getElementById("captured-photo");
+        const captionText = document.getElementById("caption-text");
+        const photoCounter = document.getElementById("photo-count");
+        const shutterSound = document.getElementById("shutter-sound");
+
+        canvas3.addEventListener("mousedown", (e) => {
+          isDragging = true;
           dragStartX = e.offsetX;
           dragStartY = e.offsetY;
-          drawScope();
-        }
-      });
-    
-      canvas3.addEventListener("wheel", (e) => {
-        e.preventDefault();
-        const zoomAmount = e.deltaY * -0.001;
-        zoom += zoomAmount;
-        zoom = Math.min(Math.max(zoom, 0.5), 3);
-        drawScope();
-      });
-    
-      moonImg.onload = () => drawScope();
-    
-      function drawScope() {
-        ctx3.clearRect(0, 0, canvas3.width, canvas3.height);
-        const scopeSize = canvas3.width;
-        const imgWidth = moonImg.width / zoom;
-        const imgHeight = moonImg.height / zoom;
-        const drawX = (moonImg.width / 2 - imgWidth / 2 + offsetX);
-        const drawY = (moonImg.height / 2 - imgHeight / 2 + offsetY);
-        ctx3.save();
-        ctx3.beginPath();
-        ctx3.arc(scopeSize / 2, scopeSize / 2, scopeSize / 2, 0, Math.PI * 2, true);
-        ctx3.closePath();
-        ctx3.clip();
-        ctx3.drawImage(
-          moonImg,
-          drawX, drawY, imgWidth, imgHeight,
-          0, 0, scopeSize, scopeSize
-        );
-        ctx3.restore();
-        const gradient = ctx3.createRadialGradient(scopeSize / 2, scopeSize / 2, 180, scopeSize / 2, scopeSize / 2, scopeSize / 2);
-        gradient.addColorStop(0, 'rgba(0,0,0,0)');
-        gradient.addColorStop(1, 'rgba(0,0,0,0.6)');
-        ctx3.fillStyle = gradient;
-        ctx3.fillRect(0, 0, scopeSize, scopeSize);
-      }
-    
-      document.getElementById('capture-button').addEventListener('click', function(e) {
-        e.preventDefault();
-        e.stopPropagation();
-        shutterSound.currentTime = 0;
-        shutterSound.play();
-        const snapshot = document.createElement('div');
-        snapshot.className = 'snapshot-frame';
-        const img = document.createElement('img');
-        img.src = canvas3.toDataURL('image/png');
-        img.className = 'captured-image';
-        const caption = document.createElement('div');
-        caption.className = 'snapshot-caption';
-        const captions = [
-          "You caught yourself smiling :)",
-          "Smile for me :)))",
-          "I'm yoursss, only yourss",
-          "Hey you, you look amazing",
-          "Your eyes are sparkling ! :)",
-          "A portrait of Luni",
-          "Eternally Yours"
-        ];
-        caption.textContent = captions[Math.floor(Math.random() * captions.length)];
-        const closeBtn = document.createElement('button');
-        closeBtn.innerHTML = '×';
-        closeBtn.className = 'close-polaroid';
-        closeBtn.addEventListener('click', () => {
-          snapshot.classList.remove('visible');
-          setTimeout(() => snapshot.remove(), 500);
         });
-        snapshot.appendChild(closeBtn);
-        snapshot.appendChild(img);
-        snapshot.appendChild(caption);
-        document.body.appendChild(snapshot);
-        setTimeout(() => {
-          snapshot.className = 'snapshot-frame visible';
-        }, 10);
-        photosTaken++;
-        photoCounter.textContent = `Photos taken: ${photosTaken}`;
-        popupImg.src = img.src;
-        captionText.textContent = caption.textContent;
-        popup.classList.add('show');
-        setTimeout(() => {
-          popup.classList.remove('show');
-        }, 3000);
-      });
-    
-      document.getElementById('reset-telescope').addEventListener('click', function() {
-        offsetX = 0;
-        offsetY = 0;
-        zoom = 1.5;
-        drawScope();
-      });
-    
-      // Lunookie section
-      const lunookie = document.getElementById('lunookie-img');
-      const messageBox = document.getElementById('lunookie-message');
-      const cuddleCounter = document.getElementById('cuddle-counter');
-      const miniLunookie = document.getElementById('mini-lunookie');
-      const hugSound = document.getElementById('hug-sound');
-      let cuddleCount = 0;
-      let sleepTimer;
-      const cuteMessages = [
-        "I adore youu",
-        "Pookie misses Luni ",
-        "Don't let goo of mee",
-        "Hug me tighter Lunii 🐰",
-        "I Feel safe with you",
-        "Pookie wants to hug Luni forever "
-      ];
-    
-      lunookie.addEventListener('click', () => {
-        clearTimeout(sleepTimer);
-        lunookie.classList.add('hugged');
-        hugSound.currentTime = 0;
-        hugSound.play();
-        const randomMessage = cuteMessages[Math.floor(Math.random() * cuteMessages.length)];
-        messageBox.textContent = randomMessage;
-        messageBox.classList.add('show');
-        cuddleCount++;
-        cuddleCounter.textContent = `Hugs: ${cuddleCount} 🐰`;
-        setTimeout(() => {
-          lunookie.classList.remove('hugged');
-          messageBox.classList.remove('show');
-        }, 1500);
+        canvas3.addEventListener("mouseup", () => isDragging = false);
+        canvas3.addEventListener("mouseleave", () => isDragging = false);
+        canvas3.addEventListener("mousemove", (e) => {
+          if (isDragging) {
+            offsetX += (e.offsetX - dragStartX) / zoom;
+            offsetY += (e.offsetY - dragStartY) / zoom;
+            dragStartX = e.offsetX;
+            dragStartY = e.offsetY;
+            drawScope();
+          }
+        });
+
+        canvas3.addEventListener("wheel", (e) => {
+          e.preventDefault();
+          const zoomAmount = e.deltaY * -0.001;
+          zoom += zoomAmount;
+          zoom = Math.min(Math.max(zoom, 0.5), 3);
+          drawScope();
+        });
+
+        moonImg.onload = () => drawScope();
+
+        function drawScope() {
+          ctx3.clearRect(0, 0, canvas3.width, canvas3.height);
+          const scopeSize = canvas3.width;
+          const imgWidth = moonImg.width / zoom;
+          const imgHeight = moonImg.height / zoom;
+          const drawX = (moonImg.width / 2 - imgWidth / 2 + offsetX);
+          const drawY = (moonImg.height / 2 - imgHeight / 2 + offsetY);
+          ctx3.save();
+          ctx3.beginPath();
+          ctx3.arc(scopeSize / 2, scopeSize / 2, scopeSize / 2, 0, Math.PI * 2, true);
+          ctx3.closePath();
+          ctx3.clip();
+          ctx3.drawImage(
+            moonImg,
+            drawX, drawY, imgWidth, imgHeight,
+            0, 0, scopeSize, scopeSize
+          );
+          ctx3.restore();
+          const gradient = ctx3.createRadialGradient(scopeSize / 2, scopeSize / 2, 180, scopeSize / 2, scopeSize / 2, scopeSize / 2);
+          gradient.addColorStop(0, 'rgba(0,0,0,0)');
+          gradient.addColorStop(1, 'rgba(0,0,0,0.6)');
+          ctx3.fillStyle = gradient;
+          ctx3.fillRect(0, 0, scopeSize, scopeSize);
+        }
+
+        document.getElementById('capture-button').addEventListener('click', function(e) {
+          e.preventDefault();
+          e.stopPropagation();
+          shutterSound.currentTime = 0;
+          shutterSound.play();
+          const snapshot = document.createElement('div');
+          snapshot.className = 'snapshot-frame';
+          const img = document.createElement('img');
+          img.src = canvas3.toDataURL('image/png');
+          img.className = 'captured-image';
+          const caption = document.createElement('div');
+          caption.className = 'snapshot-caption';
+          const captions = [
+            "You caught yourself smiling :)",
+            "Smile for me :)))",
+            "I'm yoursss, only yourss",
+            "Hey you, you look amazing",
+            "Your eyes are sparkling ! :)",
+            "A portrait of Luni",
+            "Eternally Yours"
+          ];
+          caption.textContent = captions[Math.floor(Math.random() * captions.length)];
+          const closeBtn = document.createElement('button');
+          closeBtn.innerHTML = '×';
+          closeBtn.className = 'close-polaroid';
+          closeBtn.addEventListener('click', () => {
+            snapshot.classList.remove('visible');
+            setTimeout(() => snapshot.remove(), 500);
+          });
+          snapshot.appendChild(closeBtn);
+          snapshot.appendChild(img);
+          snapshot.appendChild(caption);
+          document.body.appendChild(snapshot);
+          setTimeout(() => {
+            snapshot.className = 'snapshot-frame visible';
+          }, 10);
+          photosTaken++;
+          photoCounter.textContent = `Photos taken: ${photosTaken}`;
+          popupImg.src = img.src;
+          captionText.textContent = caption.textContent;
+          popup.classList.add('show');
+          setTimeout(() => {
+            popup.classList.remove('show');
+          }, 3000);
+        });
+
+        document.getElementById('reset-telescope').addEventListener('click', function() {
+          offsetX = 0;
+          offsetY = 0;
+          zoom = 1.5;
+          drawScope();
+        });
+      })();
+
+      // Lunookie Section
+      (function () {
+        const lunookie = document.getElementById('lunookie-img');
+        const messageBox = document.getElementById('lunookie-message');
+        const cuddleCounter = document.getElementById('cuddle-counter');
+        const miniLunookie = document.getElementById('mini-lunookie');
+        const hugSound = document.getElementById('hug-sound');
+        let cuddleCount = 0;
+        let sleepTimer;
+        const cuteMessages = [
+          "I adore youu",
+          "Pookie misses Luni ",
+          "Don't let goo of mee",
+          "Hug me tighter Lunii 🐰",
+          "I Feel safe with you",
+          "Pookie wants to hug Luni forever "
+        ];
+
+        lunookie.addEventListener('click', () => {
+          clearTimeout(sleepTimer);
+          lunookie.classList.add('hugged');
+          hugSound.currentTime = 0;
+          hugSound.play();
+          const randomMessage = cuteMessages[Math.floor(Math.random() * cuteMessages.length)];
+          messageBox.textContent = randomMessage;
+          messageBox.classList.add('show');
+          cuddleCount++;
+          cuddleCounter.textContent = `Hugs: ${cuddleCount} 🐰`;
+          setTimeout(() => {
+            lunookie.classList.remove('hugged');
+            messageBox.classList.remove('show');
+          }, 1500);
+          resetSleepTimer();
+        });
+
+        function showSleepingZ() {
+          if (!document.getElementById('sleepingZ')) {
+            const z = document.createElement('div');
+            z.id = 'sleepingZ';
+            z.className = 'sleeping-z';
+            z.textContent = 'Zzz...';
+            lunookie.parentNode.appendChild(z);
+          }
+        }
+
+        function removeSleepingZ() {
+          const z = document.getElementById('sleepingZ');
+          if (z) z.remove();
+        }
+
+        function resetSleepTimer() {
+          clearTimeout(sleepTimer);
+          removeSleepingZ();
+          sleepTimer = setTimeout(() => {
+            showSleepingZ();
+          }, 10000);
+        }
+
         resetSleepTimer();
-      });
-    
-      function showSleepingZ() {
-        if (!document.getElementById('sleepingZ')) {
-          const z = document.createElement('div');
-          z.id = 'sleepingZ';
-          z.className = 'sleeping-z';
-          z.textContent = 'Zzz...';
-          lunookie.parentNode.appendChild(z);
+
+        // Mini Lunookie cursor follower
+        let isLunookieFollowerEnabled = true;
+        const lunookieToggleButton = document.getElementById('lunookie-follower-toggle');
+
+        function toggleLunookieFollower() {
+          isLunookieFollowerEnabled = !isLunookieFollowerEnabled;
+          miniLunookie.style.display = isLunookieFollowerEnabled ? 'block' : 'none';
+          lunookieToggleButton.textContent = isLunookieFollowerEnabled ? 'Hide Lunookie 🐰' : 'Show Lunookie 🐰';
         }
-      }
-    
-      function removeSleepingZ() {
-        const z = document.getElementById('sleepingZ');
-        if (z) z.remove();
-      }
-    
-      function resetSleepTimer() {
-        clearTimeout(sleepTimer);
-        removeSleepingZ();
-        sleepTimer = setTimeout(() => {
-          showSleepingZ();
-        }, 10000);
-      }
-    
-      resetSleepTimer();
-    
-      // Mini Lunookie cursor follower with toggle
-      let isLunookieFollowerEnabled = true;
-      const lunookieToggleButton = document.getElementById('lunookie-follower-toggle');
-      
-      function toggleLunookieFollower() {
-        isLunookieFollowerEnabled = !isLunookieFollowerEnabled;
-        miniLunookie.style.display = isLunookieFollowerEnabled ? 'block' : 'none';
-        lunookieToggleButton.textContent = isLunookieFollowerEnabled ? 'Hide Lunookie 🐰' : 'Show Lunookie 🐰';
-      }
-    
-      lunookieToggleButton.addEventListener('click', toggleLunookieFollower);
-    
-      document.addEventListener('mousemove', (e) => {
-        if (isLunookieFollowerEnabled) {
-          miniLunookie.style.left = `${e.clientX + 15}px`;
-          miniLunookie.style.top = `${e.clientY + 15}px`;
+
+        lunookieToggleButton.addEventListener('click', toggleLunookieFollower);
+
+        document.addEventListener('mousemove', (e) => {
+          if (isLunookieFollowerEnabled) {
+            miniLunookie.style.left = `${e.clientX + 15}px`;
+            miniLunookie.style.top = `${e.clientY + 15}px`;
+          }
+        }, { passive: true });
+
+        miniLunookie.style.display = 'block';
+      })();
+
+      // Love Letters Section
+      (function () {
+        const envelope = document.getElementById('envelope');
+        const letterContent = document.getElementById('letter-content');
+        const anotherLetterBtn = document.getElementById('another-letter-btn');
+        const chimeSound = document.getElementById('chime-sound');
+        const loveLetters = [
+          "My Luni, you’re my everything, my soul, my heart, and all of me...",
+          "You're my home, my safe place, and where my heart always wants to stay...",
+          "My soul chose you, only you, and will choose you every day, and every second, in every life time...",
+          "I'm all yours, only yours, forever yours..all of me.. ",
+          "You can Luni, yes YOU can...",
+          "I'll stand next to you, whatever life throws at us.. I'll be with you, to pick you up, every single time..."
+        ];
+
+        function showLetter() {
+          const randomLetter = loveLetters[Math.floor(Math.random() * loveLetters.length)];
+          letterContent.textContent = randomLetter;
+          letterContent.classList.remove('hidden');
+          letterContent.classList.add('show');
+          envelope.classList.add('hidden');
+          anotherLetterBtn.classList.remove('hidden');
+          chimeSound.currentTime = 0;
+          chimeSound.play();
         }
-      }, { passive: true });
-    
-      miniLunookie.style.display = 'block';
-    
-      // Love Letters section
-      const envelope = document.getElementById('envelope');
-      const letterContent = document.getElementById('letter-content');
-      const anotherLetterBtn = document.getElementById('another-letter-btn');
-      const chimeSound = document.getElementById('chime-sound');
-      const loveLetters = [
-        "My Luni, you’re my everything, my soul, my heart, and all of me...",
-        "You're my home, my safe place, and where my heart always wants to stay...",
-        "My soul chose you, only you, and will choose you every day, and every second, in every life time...",
-        "I'm all yours, only yours, forever yours..all of me.. ",
-        "You can Luni, yes YOU can...",
-        "I'll stand next to you, whatever life throws at us.. I'll be with you, to pick you up, every single time..."
-      ];
-    
-      function showLetter() {
-        const randomLetter = loveLetters[Math.floor(Math.random() * loveLetters.length)];
-        letterContent.textContent = randomLetter;
-        letterContent.classList.remove('hidden');
-        letterContent.classList.add('show');
-        envelope.classList.add('hidden');
-        anotherLetterBtn.classList.remove('hidden');
-        chimeSound.currentTime = 0;
-        chimeSound.play();
-      }
-    
-      function resetLetter() {
-        letterContent.classList.remove('show');
-        letterContent.classList.add('hidden');
-        envelope.classList.remove('hidden');
-        anotherLetterBtn.classList.add('hidden');
-      }
-    
-      envelope.addEventListener('click', showLetter);
-      anotherLetterBtn.addEventListener('click', resetLetter);
+
+        function resetLetter() {
+          letterContent.classList.remove('show');
+          letterContent.classList.add('hidden');
+          envelope.classList.remove('hidden');
+          anotherLetterBtn.classList.add('hidden');
+        }
+
+        envelope.addEventListener('click', showLetter);
+        anotherLetterBtn.addEventListener('click', resetLetter);
+      })();
+
+      // Midnight Whispers Section
+      (function () {
+        const whisperMessages = [
+          'Hey my Luni... Im thinking of you, just like you think of me... whispering your name... just like you whisper mine... and Lunar, is the only name I will forever whisper...',
+          'Lunari, Im forever yours... forever... and only yours Luni..',
+          'I know you might be struggling to sleep right now.. but I want you to know that I am too... my heart aches, and I miss you Luni.. I miss you more than words can say..',
+          'Feel my warmth, my hugs.. and feel safe... Im with you.. holding you.. and holding onto you, until Im no longer alive...',
+          'Luni, when sleeping feels hard, know that I’m holding you within my heart, tucking you in, making you feel warm :)',
+          'Lunar, I promise you, We will grow together.. smile together.. struggle together.. until we make it together...',
+          'My soul chose you from the start, and will still choose you every day, every second, and in every life time Lunar...',
+          'When you feel down, Im here.. Im with you.. never hesitate to mention it to me... take all my attention, have all my reminders... all of me is yours, my Lunar :)',
+          'When my Luni feels a tiny bit of ache in her heart, I feel it... because Im her, and shes me.. we are one...',
+          'Hey you, sweetheart :), look, Im in the corner of your room, waving, and smiling at you :), smile back, and feel safe falling asleep :)'
+        ];
+        let whisperIndex = 0;
+        let isLullabyPlaying = false;
+
+        function releaseWhisper() {
+          console.log('Whisper jar clicked, message:', whisperMessages[whisperIndex]);
+          const msgDiv = document.getElementById('whisper-message');
+          const chime = document.getElementById('chime-sound');
+          if (msgDiv) {
+            msgDiv.textContent = whisperMessages[whisperIndex];
+            msgDiv.classList.add('show');
+            setTimeout(() => msgDiv.classList.remove('show'), 4000);
+            whisperIndex = (whisperIndex + 1) % whisperMessages.length;
+          } else {
+            console.error('Whisper message div not found');
+          }
+          if (chime) {
+            chime.currentTime = 0;
+            chime.play().catch(err => console.error('Chime play failed:', err));
+          }
+        }
+
+        function shakeJar() {
+          console.log('Shake Jar button clicked');
+          const jarParticles = document.querySelector('.jar-particles');
+          const chime = document.getElementById('chime-sound');
+          if (jarParticles) {
+            // Set random values for chaotic movement
+            jarParticles.style.setProperty('--rand1', Math.random());
+            jarParticles.style.setProperty('--rand2', Math.random());
+            jarParticles.style.setProperty('--rand3', Math.random());
+            jarParticles.style.setProperty('--rand4', Math.random());
+            jarParticles.style.setProperty('--rand5', Math.random());
+            jarParticles.style.setProperty('--rand6', Math.random());
+            // Apply chaotic animation
+            jarParticles.classList.add('chaos');
+            setTimeout(() => {
+              jarParticles.classList.remove('chaos');
+            }, 1500);
+          } else {
+            console.error('Jar particles not found for shake effect');
+          }
+          if (chime) {
+            chime.currentTime = 0;
+            chime.play().catch(err => console.error('Chime play failed:', err));
+          }
+        }
+
+        console.log('Initializing Midnight Whispers...');
+        const lullabyBtn = document.getElementById('lullaby-btn');
+        const shakeJarBtn = document.getElementById('shake-jar-btn');
+        const lullaby = document.getElementById('lullaby-sound');
+        const section = document.querySelector('.midnight-whispers-section');
+        const whisperJar = document.querySelector('.whisper-jar');
+
+        if (!lullabyBtn) console.error('Lullaby button not found');
+        if (!shakeJarBtn) console.error('Shake Jar button not found');
+        if (!lullaby) console.error('Lullaby audio not found');
+        if (!section) console.error('Midnight Whispers section not found');
+        if (!whisperJar) console.error('Whisper jar not found');
+
+        if (lullabyBtn) {
+          lullabyBtn.addEventListener('click', () => {
+            console.log('Lullaby button clicked, isLullabyPlaying:', isLullabyPlaying);
+            isLullabyPlaying = !isLullabyPlaying;
+            lullabyBtn.textContent = isLullabyPlaying ? 'Stop the cute Lullaby' : 'Play a cute Lullaby';
+            if (section) section.classList.toggle('lullaby-playing', isLullabyPlaying);
+            if (lullaby) {
+              if (isLullabyPlaying) {
+                lullaby.play().then(() => {
+                  console.log('Lullaby playing');
+                  if (section) {
+                    const waves = document.createElement('div');
+                    waves.className = 'sound-waves';
+                    waves.innerHTML = '<div class="sound-wave"></div><div class="sound-wave"></div><div class="sound-wave"></div>';
+                    section.appendChild(waves);
+                  }
+                }).catch(err => {
+                  console.error('Lullaby play failed:', err);
+                  isLullabyPlaying = false;
+                  lullabyBtn.textContent = 'Play a cute Lullaby :)';
+                  if (section) section.classList.remove('lullaby-playing');
+                });
+              } else {
+                lullaby.pause();
+                lullaby.currentTime = 0;
+                console.log('Lullaby stopped');
+                if (section) {
+                  const waves = section.querySelector('.sound-waves');
+                  if (waves) waves.remove();
+                }
+              }
+            }
+          });
+        }
+
+        if (shakeJarBtn) {
+          shakeJarBtn.addEventListener('click', shakeJar);
+        }
+
+        if (whisperJar) {
+          whisperJar.addEventListener('click', releaseWhisper);
+        }
+      })();
     });
-    </script>
+  </script>
 </body>
 </html>
